@@ -13,6 +13,12 @@ class DispensariesViewController: UIViewController {
     //Container View variables
     @IBOutlet weak var mapViewContainer: UIView!
     
+    
+    @IBOutlet weak var medicalButtonOutlet: UIButton!
+    
+    
+    @IBOutlet weak var medicalButtonPressed: UIButton!
+    
     @IBOutlet weak var listViewContainer: UIView!
     
     //Segmented controls var and func
@@ -25,6 +31,7 @@ class DispensariesViewController: UIViewController {
             print("the map is showing")
         }
         else if(segmentedControl.selectedSegmentIndex == 1) {
+            
             mapViewContainer.hidden = true
             listViewContainer.hidden = false
             print("the list is showing")

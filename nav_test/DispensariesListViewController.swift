@@ -44,7 +44,7 @@ class DispensariesListViewController: UIViewController, UITableViewDelegate, UIT
                         let dispensaryCity = arrayOfDispensaries[i]["City"].string
                         let dispensaryPhone = arrayOfDispensaries[i]["phone"].string
                         let dispensaryLogo = arrayOfDispensaries[i]["logo"].string
-                        let dispensary = mkDispensary(title: dispensaryName!, id: dispensaryId!, name: dispensaryName!, address: dispensaryAdd!, city: dispensaryCity!, latitude: dispensaryLat!, longitude: dispensaryLng!, state: dispensaryState!, phone: dispensaryPhone!, distance: 0.0, logo: dispensaryLogo!)
+                        let dispensary = mkDispensary(title: dispensaryName!, isMedical: Bool(), id: dispensaryId!, name: dispensaryName!, address: dispensaryAdd!, city: dispensaryCity!, latitude: dispensaryLat!, longitude: dispensaryLng!, state: dispensaryState!, phone: dispensaryPhone!, distance: 0.0, logo: dispensaryLogo!)
                         dispensary.latitude = dispensaryLat!
                         dispensary.longitude = dispensaryLng!
                         self.dispensaries.append(dispensary)

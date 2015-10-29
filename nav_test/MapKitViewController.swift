@@ -20,7 +20,7 @@ class MapkitViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
     @IBOutlet weak var mapView: MKMapView!
     var logo : UIImage?
     var requestImage = true;
-    var annotations = [MKAnnotation]()
+    var medicalButtonOutlet = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +31,7 @@ class MapkitViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
+            self.mapView.showsUserLocation = true
             if let location = locationManager.location {
                 self.currentLocation = location
                 drawMarkersForDispensariesNear(currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
@@ -39,16 +40,18 @@ class MapkitViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         }
         
         self.view = self.mapView
-        
+        self.view.addSubview(self.medicalButtonOutlet)
+        self.drawButton()
         
     }
+    
 //    I don't think we need this. saving it until more of this controller is stable -- Taylor
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        //print("here")
-        if status == .AuthorizedWhenInUse {
-            locationManager.startUpdatingLocation()
-        }
-    }
+//    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+//        //print("here")
+//        if status == .AuthorizedWhenInUse {
+//            locationManager.startUpdatingLocation()
+//        }
+//    }
 //    I also dont think we need this. Same reason as above
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 //        if let location = locations.first {
@@ -75,31 +78,32 @@ class MapkitViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
     
     
 func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-    if let annotation = annotation as? mkDispensary {
-        let identifier = "pin"
-        var view = MKAnnotationView()
-//        if let dequeuedView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier) {
-//            dequeuedView.annotation = annotation
-//            view = dequeuedView
-//            //                SET THE IMAGE last!
-////            let url = NSURL(string: annotation.logo)
-////            let data = NSData(contentsOfURL: url!)
-////            view.logo = UIImage(data: data!)
-//        } else {
-            view = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            view.canShowCallout = true
-            view.calloutOffset = CGPoint(x: -5, y: 5)
-            view.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure) as UIView
-            view.image = UIImage(named: "leaficon")
-//            let url = NSURL(string: annotation.logo)
-//            let data = NSData(contentsOfURL: url!)
-//            view.logo = UIImage(data: data!)
-//        }
-        return view
+    if annotation is MKUserLocation {
+        print("ap view draws  for standard user loap view draws blue dot for standard user lo")
+        //return nil so map view draws "blue dot" for standard user location
+        return nil
     }
-    print("returning nil")
-    return nil
-}
+    var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier("pin")
+    //    check if it's dequeueable. Apple docs recommend this to conserve memory
+    var imgStr = String()
+    let imageChecker = annotation as! mkDispensary
+    if pinView == nil {
+        if imageChecker.isMedical == false {
+            imgStr = "weedpin"
+        } else if imageChecker.isMedical == true {imgStr = "medpin"}
+        let identifier = "pin"
+        pinView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+        pinView!.canShowCallout = true
+        pinView!.calloutOffset = CGPoint(x: -5, y: 5)
+        pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure) as UIView
+        pinView!.image = UIImage(named: imgStr)
+    }
+    //if it's already on the map, draw it as is
+    else {
+        pinView!.annotation = annotation
+    }
+        return pinView
+    }
     
 func mapView(mapView: MKMapView, annotationView: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
     
@@ -145,17 +149,25 @@ func drawMarkersForDispensariesNear(latitude: Double, longitude: Double) {
                         let dispensaryCity = arrayOfDispensaries[i]["City"].string
                         let dispensaryPhone = arrayOfDispensaries[i]["phone"].string
                         let dispensaryLogo = arrayOfDispensaries[i]["logo"].string
-                        
+//                        we need an attribute for isMedical so we can display different pins. For now, I'll make every 7th dispensary medical. I do that in the annotation view class
                         //distance set to maxRadius on node backend = 5000
                         let dispensaryDistance = arrayOfDispensaries[i]["distance"].double
-                        let dispensary = mkDispensary(title: dispensaryName!, id: dispensaryId!, name: dispensaryName!, address: dispensaryAdd!, city: dispensaryCity!, latitude: dispensaryLat!, longitude: dispensaryLng!, state: dispensaryState!, phone: dispensaryPhone!, distance: 0.0, logo: dispensaryLogo!)
+                        let dispensary = mkDispensary(title: dispensaryName!, isMedical: Bool(), id: dispensaryId!, name: dispensaryName!, address: dispensaryAdd!, city: dispensaryCity!, latitude: dispensaryLat!, longitude: dispensaryLng!, state: dispensaryState!, phone: dispensaryPhone!, distance: 0.0, logo: dispensaryLogo!)
                         dispensary.latitude = dispensaryLat!
                         dispensary.longitude = dispensaryLng!
                         dispensary.distance = dispensaryDistance!
                         
+                        let rand = arc4random_uniform(7)
+                        if rand == 5 {
+                            dispensary.isMedical = true
+                        } else {
+                            dispensary.isMedical = false
+                        }
+                        
+
                         self.dispensaries.append(dispensary)
                         //draw markers
-                        self.mapView.addAnnotations(self.dispensaries)
+                        self.refreshAnnotations(2)
                         
                     }
                     print(self.dispensaries.count)
@@ -170,14 +182,57 @@ func drawMarkersForDispensariesNear(latitude: Double, longitude: Double) {
 //    func getDistanceOfDispensariesWhere(Double: latitude, Double: longitude) {
 //        
 //    }
-
-
+//    we have to make this button programatically. might be able to do it with delegate instead..
+    func drawButton(){
+        let imageOn = UIImage(named:"medicalOn")
+        let button = UIButton()
+        button.frame = CGRectMake(10, 10, 75, 69)
+        button.setBackgroundImage(imageOn, forState: .Normal)
+        button.addTarget(self, action: "buttonAction:", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        self.view.addSubview(button)
+    }
+    
+    func buttonAction(sender:UIButton!)
+    {
+        print("Button tapped")
+        if sender.backgroundImageForState(.Normal) == UIImage(named:"medicalOn") {
+            let image = UIImage(named:"medicalOff")
+            sender.setBackgroundImage(image, forState: .Normal)
+            print("yup")
+            self.refreshAnnotations(0)
+        } else if sender.backgroundImageForState(.Normal) == UIImage(named: "medicalOff") {
+            let image = UIImage(named:"medicalOn")
+            sender.setBackgroundImage(image, forState: .Normal)
+            self.refreshAnnotations(1)
+        }
+    
+    }
     func zoomToSeattle() {
         let seattleArea = CLLocationCoordinate2D(
             latitude: 47.60616304, longitude: -122.21466064)
         let region = MKCoordinateRegionMakeWithDistance(
             seattleArea, 60000, 60000)
-        mapView.setRegion(region, animated: false)
+        mapView.setRegion(region, animated: true)
+    }
+    
+    func refreshAnnotations(identifier: Int) {
+        //            self.mapView.annotations is get-only, so self.mapview.annotations.removeAll() will not work
+        if identifier == 0 {
+            self.mapView.removeAnnotations(self.mapView.annotations)
+            for dispensary in self.dispensaries {
+                if dispensary.isMedical! {
+                    self.mapView.addAnnotation(dispensary)
+                }
+            }
+        } else {
+            self.mapView.removeAnnotations(self.mapView.annotations)
+            for dispensary in self.dispensaries {
+                if !dispensary.isMedical! {
+                    self.mapView.addAnnotation(dispensary)
+                }
+            }
+        }
     }
     
     func parseJSON(inputData: NSData) -> NSArray? {

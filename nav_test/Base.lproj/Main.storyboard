@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bHG-1z-Lf6">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bHG-1z-Lf6">
                                 <rect key="frame" x="20" y="193" width="560" height="30"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -27,7 +27,7 @@
                                     <action selector="liveTextFieldValidate:" destination="G6R-bM-GhJ" eventType="editingChanged" id="1Ap-19-4r7"/>
                                 </connections>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Last Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="C4C-Eh-S0c">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Last Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="C4C-Eh-S0c">
                                 <rect key="frame" x="20" y="155" width="560" height="30"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -36,7 +36,7 @@
                                     <action selector="liveTextFieldValidate:" destination="G6R-bM-GhJ" eventType="editingChanged" id="IUz-pc-0he"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6N9-lU-RvH">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6N9-lU-RvH">
                                 <rect key="frame" x="20" y="28" width="560" height="56"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -48,7 +48,7 @@
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vtf-AU-vC6">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vtf-AU-vC6">
                                 <rect key="frame" x="20" y="117" width="560" height="30"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -57,7 +57,7 @@
                                     <action selector="liveTextFieldValidate:" destination="G6R-bM-GhJ" eventType="editingChanged" id="nzu-k3-ynR"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I5G-Hi-0GI">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I5G-Hi-0GI">
                                 <rect key="frame" x="20" y="524" width="560" height="56"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -73,7 +73,7 @@
                                     <segue destination="Pd5-fX-ZZG" kind="show" identifier="SignIn" id="Bhp-qt-bVI"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JUA-7l-oda">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JUA-7l-oda">
                                 <rect key="frame" x="20" y="460" width="560" height="56"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.35155268197131079" green="0.84235716540404049" blue="0.62029162123017456" alpha="1" colorSpace="calibratedRGB"/>
@@ -88,14 +88,14 @@
                                     <action selector="registerButtonPressed:" destination="G6R-bM-GhJ" eventType="touchUpInside" id="i8P-et-NHM"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4lK-4A-aaL">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4lK-4A-aaL">
                                 <rect key="frame" x="25" y="224" width="29" height="14"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sVP-5z-mMj">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sVP-5z-mMj">
                                 <rect key="frame" x="20" y="278" width="560" height="30"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -104,7 +104,7 @@
                                     <action selector="liveTextFieldValidate:" destination="G6R-bM-GhJ" eventType="editingChanged" id="Ohx-RM-Qpo"/>
                                 </connections>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Phone" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oJx-e4-ysk">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Phone" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oJx-e4-ysk">
                                 <rect key="frame" x="20" y="240" width="560" height="30"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -113,7 +113,7 @@
                                     <action selector="liveTextFieldValidate:" destination="G6R-bM-GhJ" eventType="editingChanged" id="QSK-YW-glW"/>
                                 </connections>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password Confirm" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mTl-97-fgD">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password Confirm" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mTl-97-fgD">
                                 <rect key="frame" x="20" y="316" width="560" height="30"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -242,6 +242,8 @@
                     <connections>
                         <outlet property="listViewContainer" destination="CAm-Xh-ZKg" id="85x-TC-itJ"/>
                         <outlet property="mapViewContainer" destination="r7J-aQ-h4U" id="9Cj-LF-2sx"/>
+                        <outlet property="medicalButtonOutlet" destination="QFj-5b-HYy" id="bsz-7t-3yC"/>
+                        <outlet property="medicalButtonPressed" destination="QFj-5b-HYy" id="2Sr-VE-whY"/>
                         <outlet property="segmentedControl" destination="CS1-f1-K6b" id="YPX-uE-pFN"/>
                     </connections>
                 </viewController>
@@ -932,14 +934,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="507"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="B0z-26-lRa">
-                                <rect key="frame" x="20" y="0.0" width="560" height="507"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="B0z-26-lRa">
+                                <rect key="frame" x="7" y="0.0" width="560" height="507"/>
                                 <animations/>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j6E-ys-tDL">
-                                <rect key="frame" x="277" y="457" width="46" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QFj-5b-HYy">
+                                <rect key="frame" x="34" y="86" width="75" height="69"/>
                                 <animations/>
-                                <state key="normal" title="Button"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
+                                </accessibility>
+                                <size key="titleShadowOffset" width="2" height="2"/>
+                                <state key="normal" image="medicalOn" backgroundImage="medicalOn"/>
                             </button>
                         </subviews>
                         <animations/>
@@ -948,9 +954,7 @@
                             <constraint firstItem="B0z-26-lRa" firstAttribute="top" secondItem="JcT-bY-tR6" secondAttribute="bottom" id="1oz-bs-aFp"/>
                             <constraint firstItem="Wag-wx-sZ6" firstAttribute="top" secondItem="B0z-26-lRa" secondAttribute="bottom" id="Pj4-HA-fgQ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="B0z-26-lRa" secondAttribute="trailing" id="bNY-t9-pKb"/>
-                            <constraint firstItem="j6E-ys-tDL" firstAttribute="top" secondItem="B0z-26-lRa" secondAttribute="bottom" constant="-50" id="glz-mf-q4N"/>
                             <constraint firstItem="B0z-26-lRa" firstAttribute="leading" secondItem="23u-wa-H6q" secondAttribute="leadingMargin" id="jVV-Ux-Bt4"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="j6E-ys-tDL" secondAttribute="trailing" constant="257" id="vSQ-KB-Sif"/>
                         </constraints>
                     </view>
                     <connections>
@@ -960,7 +964,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JfJ-Y9-4yC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4598" y="1224"/>
+            <point key="canvasLocation" x="4552" y="1211.5"/>
         </scene>
         <!--DispensaryCompleteList-->
         <scene sceneID="X14-dF-a7C">
@@ -1109,9 +1113,10 @@
         <image name="SativaDark" width="500" height="313"/>
         <image name="TestNug" width="577" height="1024"/>
         <image name="User_26px" width="26" height="26"/>
+        <image name="medicalOn" width="75" height="69"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="JbD-oF-T18"/>
         <segue reference="B36-gW-z4b"/>
+        <segue reference="Bhp-qt-bVI"/>
     </inferredMetricsTieBreakers>
 </document>
