@@ -11,13 +11,13 @@ import GoogleMaps
 import MapKit
 import Alamofire
 
-class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate{
+class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate {
     
     var menu = [Menu]()
     var menuFiltered = [Menu]()
     
     var didPressFilterButton: Bool = false
-    var previousButtonTag: Int?
+    var previousButtonTag = 5
     
     var myMarker: MKAnnotation?
     var dispensary: mkDispensary?
@@ -29,11 +29,6 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var hybridButton: UIButton!
     @IBOutlet weak var sativaButton: UIButton!
     @IBOutlet weak var edibleButton: UIButton!
-    
-    
-    
-    
-    
     
     @IBAction func filterButtonPressed(sender: UIButton) {
         if previousButtonTag == 1 {
@@ -72,7 +67,8 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             filter("Edibles")
         } else if sender.tag == 5 {
             allButton.setBackgroundImage(UIImage(named: "Blunt"), forState: UIControlState.Normal)
-            filter("Other")
+            didPressFilterButton = false
+            //filter("Other")
         }
         previousButtonTag = sender.tag
         //print(NSThread.isMainThread() ? "Main Thread" : "Not on Main Thread")
