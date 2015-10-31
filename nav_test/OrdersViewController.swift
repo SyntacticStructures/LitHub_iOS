@@ -21,6 +21,9 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var reservationIDLabel: UILabel!
     @IBOutlet weak var totalItemsLabel: UILabel!
     @IBOutlet weak var totalPriceLabel: UILabel!
+    @IBOutlet weak var placeReservationButton: UIButton!
+    
+    
     
     var cartItems = [Reservation]()
     var reservations = Array<Reservation>()
@@ -34,6 +37,11 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let tabArray = self.tabBarController?.tabBar.items as NSArray!
+        let tabItem = tabArray.objectAtIndex(1) as! UITabBarItem
+        tabItem.badgeValue = nil
+        
         //print("reservations view load")
         ordersTable.dataSource = self
         ordersTable.delegate = self
@@ -136,6 +144,90 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
         self.userID = mainInstance.userID
     }
     
+    @IBAction func placeReservationButtonPressed(sender: UIButton) {
+        //print("place reservation pressed")
+        let status = 0
+        let date = String(NSDate())
+        let userID = self.userID!
+        let vendorID = cartItems[0].vendorID
+        //print(vendorID)
+        for var i = 0; i < cartItems.count; ++i {
+            let strainID = cartItems[i].strainID
+            var quantityGram = 0
+            var quantityEigth = 0
+            var quantityQuarter = 0
+            var quantityHalf = 0
+            var quantityOz = 0
+            if cartItems[i].quantityGram == 1 {
+                quantityGram = 1
+            }
+            if cartItems[i].quantityEigth == 1 {
+                quantityEigth = 1
+            }
+            if cartItems[i].quantityQuarter == 1 {
+                quantityQuarter = 1
+            }
+            if cartItems[i].quantityHalf == 1 {
+                quantityHalf = 1
+            }
+            if cartItems[i].quantityOz == 1 {
+                quantityOz = 1
+            }
+            let orderData = ["status": status, "created_at": date, "updated_at": date,
+                             "user_id": userID, "vendor_id": vendorID, "quantity_gram": quantityGram,
+                             "quantity_eigth": quantityEigth, "quantity_quarter": quantityQuarter,
+                             "quantity_half": quantityHalf, "quantity_oz": quantityOz, "strain_id": strainID]
+            print(orderData)
+            Alamofire.request(.POST, "http://getlithub.herokuapp.com/addOrder", parameters: orderData as! [String: AnyObject], encoding: .JSON)
+                .responseJSON { response in
+                    print("in alamofire")
+                    print(response.result.value!)
+                }
+            
+        }
+        
+    }
+    
+    
+    //add an order
+    //    @IBAction func addButtonPressed(sender: UIButton) {
+    //        let row = amountSelected.selectedRowInComponent(0)
+    //        let string = "http://getlithub.herokuapp.com/addOrder"
+    //        var gram = "0"
+    //        var eight = "0"
+    //        var quarter = "0"
+    //        var half = "0"
+    //        var oz = "0"
+    //        switch row {
+    //        case 0:
+    //            gram = "1"
+    //        case 1:
+    //            eight = "1"
+    //        case 2:
+    //            quarter = "1"
+    //        case 3:
+    //            half = "1"
+    //        case 4:
+    //            oz = "1"
+    //        default:
+    //            print("error. default thrown in switch case in productViewController")
+    //        }
+    //        print("this is the item row selected", row)
+    //        let date = String(NSDate())
+    //        let orderData = ["status": 0, "created_at": date, "updated_at": date, "user_id": currentUserId!, "vendor_id": menuItem.vendorID, "quantity_gram": gram, "quantity_eigth": eight, "quantity_quarter": quarter, "quantity_half": half, "quantity_oz": oz, "strain_id": menuItem.strainID]
+    //        //Alamofire request
+    //        Alamofire.request(.POST, string, parameters: orderData as! [String : AnyObject], encoding: .JSON)
+    //            .responseJSON { request, response, result in switch result {
+    //            case .Success(let data):
+    //                print("Order input was a success. This should be empty", data)
+    //            case .Failure(_, let error):
+    //                print("There was an error submitting order information")
+    //                }
+    //        }
+    //
+    //    }
+
+    
     @IBAction func cancelOrder(sender: UIButton) {
         if let urlToReq = NSURL(string: "http://getlithub.herokuapp.com/cancelOrder"){
             let request: NSMutableURLRequest = NSMutableURLRequest(URL: urlToReq)
@@ -173,7 +265,9 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
                             let reservationID = arrayOfReservations[i]["id"].int
                             let status = arrayOfReservations[i]["status"].string
                             let vendorName = arrayOfReservations[i]["vendor"].string
+                            let vendorID = arrayOfReservations[i]["vendor_id"].int
                             let strainName = arrayOfReservations[i]["name"].string
+                            let strainID = arrayOfReservations[i]["strain_id"].int
                             let priceGram = arrayOfReservations[i]["price_gram"].double
                             let priceEigth = arrayOfReservations[i]["price_eigth"].double
                             let priceQuarter = arrayOfReservations[i]["price_quarter"].double
@@ -184,7 +278,7 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
                             let quantityQuarter = arrayOfReservations[i]["quantity_quarter"].int
                             let quantityHalf = arrayOfReservations[i]["quantity_half"].int
                             let quantityOz = arrayOfReservations[i]["quantity_oz"].int
-                            let reservation = Reservation(status: status!, vendor: vendorName!, strainName: strainName!,
+                            let reservation = Reservation(status: status!, vendor: vendorName!, vendorID: vendorID!, strainName: strainName!, strainID: strainID!,
                                                           priceGram: priceGram!, priceEigth: priceEigth!, priceQuarter: priceQuarter!, priceHalf: priceHalf!, priceOz: priceOz!,
                                                           quantityGram: quantityGram!, quantityEigth: quantityEigth!, quantityQuarter: quantityQuarter!, quantityHalf: quantityHalf!, quantityOz: quantityOz!)
                             reservation.id = reservationID

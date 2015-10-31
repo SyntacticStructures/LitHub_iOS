@@ -29,6 +29,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var hybridButton: UIButton!
     @IBOutlet weak var sativaButton: UIButton!
     @IBOutlet weak var edibleButton: UIButton!
+    @IBOutlet weak var filterLabelDescription: UILabel!
     
     @IBAction func filterButtonPressed(sender: UIButton) {
         if previousButtonTag == 1 {
@@ -54,20 +55,25 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             //indicaButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
             //hybridButton.setBackgroundImage(UIImage(named: "HybridDark"), forState: UIControlState.Normal)
             filter("Indica")
+            filterLabelDescription.text = "Indica strains tend to be sedating and relaxing with full-body effects"
             
         } else if sender.tag == 2 {
             hybridButton.setBackgroundImage(UIImage(named: "Hybrid"), forState: UIControlState.Normal)
             //sender.titleLabel?.textColor = UIColor.blackColor()
             filter("Hybrid")
+            filterLabelDescription.text = "Hybrid strains are a cross between Hybrid and Sativa dominant strains"
         } else if sender.tag == 3 {
             sativaButton.setBackgroundImage(UIImage(named: "Sativa"), forState: UIControlState.Normal)
             filter("Sativa")
+            filterLabelDescription.text = "Sativa strains tend to be uplifting and creative with cerebrally-focused effects"
         } else if sender.tag == 4 {
             edibleButton.setBackgroundImage(UIImage(named: "Edible"), forState: UIControlState.Normal)
             filter("Edibles")
+            filterLabelDescription.text = "An edible product that contains THC"
         } else if sender.tag == 5 {
             allButton.setBackgroundImage(UIImage(named: "Blunt"), forState: UIControlState.Normal)
             didPressFilterButton = false
+            filterLabelDescription.text = "All items"
             //filter("Other")
         }
         previousButtonTag = sender.tag
@@ -180,7 +186,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
                             let priceHalf = arrOfProducts[i]["price_half"].double
                             let priceOz = arrOfProducts[i]["price_oz"].double
                             let category = arrOfProducts[i]["category"].string
-//                            let symbol = arrOfProducts[i]["symbol"].string
+//                          let symbol = arrOfProducts[i]["symbol"].string
                             let description = arrOfProducts[i]["description"].string
                             let fullImage = arrOfProducts[i]["fullsize_img1"].string
                             let dispensaryMenu = Menu(dispensaryName: dispensaryName!, strainID: strainID!, vendorID: vendorID!, priceGram: priceGram!, priceEigth: priceEigth!, priceQuarter: priceQuarter!, priceHalf: priceHalf!, priceOz: priceOz!, strainName: strainName!, category: category!, description: description!)
@@ -202,4 +208,9 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         //End alamofire
     }
     //end getMenu func
+    
+    @IBAction func backToMenuViewController(segue: UIStoryboardSegue) {
+        let menuViewController = segue.sourceViewController as? MenuViewController
+        print("attempting to go to menu")
+    }
 }

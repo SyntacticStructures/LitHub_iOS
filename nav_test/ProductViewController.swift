@@ -89,7 +89,9 @@ class ProductViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         let amount = amountSelected.selectedRowInComponent(0)
         let status = "0"
         let dispensaryName = menuItem.dispensaryName
+        let vendorID = menuItem.vendorID
         let strainName = menuItem.strainName
+        let strainID = menuItem.strainID
         let priceGram = menuItem.priceGram
         let priceEigth = menuItem.priceEigth
         let priceQuarter = menuItem.priceQuarter
@@ -112,11 +114,14 @@ class ProductViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             quantityOz = 1
         }
         
-        let reservation = Reservation(status: status, vendor: dispensaryName, strainName: strainName,
+        let reservation = Reservation(status: status, vendor: dispensaryName, vendorID: vendorID, strainName: strainName, strainID: strainID,
                                     priceGram: priceGram, priceEigth: priceEigth, priceQuarter: priceQuarter, priceHalf: priceHalf, priceOz: priceOz,
                                     quantityGram: quantityGram, quantityEigth: quantityEigth, quantityQuarter: quantityQuarter, quantityHalf: quantityHalf, quantityOz: quantityOz)
         mainInstance.cart.append(reservation)
-        print(mainInstance.cart.count)
+        //print(mainInstance.cart.count)
+        let tabArray = self.tabBarController?.tabBar.items as NSArray!
+        let tabItem = tabArray.objectAtIndex(1) as! UITabBarItem
+        tabItem.badgeValue = "1"
         
     }
     
@@ -178,6 +183,8 @@ class ProductViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return amountSelectedData[row]
     }
+    
+    
     
 //    modularize this later DRY :)
     
