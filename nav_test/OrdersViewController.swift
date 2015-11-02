@@ -38,10 +38,6 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let tabArray = self.tabBarController?.tabBar.items as NSArray!
-        let tabItem = tabArray.objectAtIndex(1) as! UITabBarItem
-        tabItem.badgeValue = nil
-        
         //print("reservations view load")
         ordersTable.dataSource = self
         ordersTable.delegate = self
@@ -57,6 +53,11 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        
+        let tabArray = self.tabBarController?.tabBar.items as NSArray!
+        let tabItem = tabArray.objectAtIndex(1) as! UITabBarItem
+        tabItem.badgeValue = nil
+        
         self.cartItems = mainInstance.cart
         //print(self.cart.count)
         self.ordersTable.reloadData()
