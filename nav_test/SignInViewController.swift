@@ -20,7 +20,8 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         if (keychain.get("email") != nil && keychain.get("password") != nil) {
-            self.performSegueWithIdentifier("UserAuthenticated", sender: UIButton())
+            let vc = self.storyboard!.instantiateViewControllerWithIdentifier("UserInfo") as! UserPageViewController
+            self.presentViewController(vc, animated: true, completion: nil)
         }
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "DismissKeyboard")
         view.addGestureRecognizer(tap)
