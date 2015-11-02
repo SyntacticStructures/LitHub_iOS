@@ -57,6 +57,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
             //Alamofire request if the error is nil
             let string = "http://getlithub.herokuapp.com/loginUser"
             print(userData)
+            
             Alamofire.request(.POST, string, parameters: userData, encoding: .JSON)
                 .responseJSON { response in
                     if response.data != nil {
@@ -68,7 +69,9 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
                             self.userID = integerToCheckUser
                             mainInstance.userID = integerToCheckUser
                             print(mainInstance.userID)
-                            self.performSegueWithIdentifier("UserAuthenticated", sender: sender)
+                            self.keychain.set(self.emailTextField.text!, forKey: "email");
+                            self.keychain.set(self.passTextField.text!, forKey: "password");
+                            self.performSegueWithIdentifier("UserAuthenticated",sender: sender)
                         } else {
                             print("This was the error response", response)
                             self.showSimpleAlertWithMessage("Incorrect email or password")
