@@ -68,6 +68,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
                             self.userID = integerToCheckUser
                             mainInstance.userID = integerToCheckUser
                             print(mainInstance.userID)
+                            
                             self.performSegueWithIdentifier("UserAuthenticated", sender: sender)
                         } else {
                             print("This was the error response", response)
