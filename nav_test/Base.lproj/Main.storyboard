@@ -263,17 +263,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reservation pending..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kVl-JV-bod">
-                                <rect key="frame" x="20" y="81" width="560" height="59"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No items in cart." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kVl-JV-bod">
+                                <rect key="frame" x="20" y="72" width="560" height="75"/>
                                 <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hU3-eA-6oT">
-                                <rect key="frame" x="20" y="166" width="560" height="2"/>
-                                <animations/>
-                            </progressView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PtG-2k-uzm">
                                 <rect key="frame" x="0.0" y="508" width="600" height="43"/>
                                 <animations/>
@@ -388,17 +384,24 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hU3-eA-6oT">
+                                <rect key="frame" x="20" y="155" width="560" height="30"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="wQ2-nK-Hl4"/>
+                                </constraints>
+                            </progressView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="PtG-2k-uzm" secondAttribute="trailing" constant="-20" id="1SW-b3-3jQ"/>
                             <constraint firstItem="pty-NF-85s" firstAttribute="leading" secondItem="5Qg-Hd-VGb" secondAttribute="leadingMargin" id="2C8-bD-kSs"/>
-                            <constraint firstItem="L9W-HJ-Pe8" firstAttribute="top" secondItem="hU3-eA-6oT" secondAttribute="bottom" constant="25" id="2vk-NM-oQ6"/>
                             <constraint firstItem="pty-NF-85s" firstAttribute="top" secondItem="L9W-HJ-Pe8" secondAttribute="bottom" id="4tQ-6V-zbg"/>
                             <constraint firstItem="Rka-dq-7gi" firstAttribute="top" secondItem="pty-NF-85s" secondAttribute="bottom" constant="8" id="7C2-5N-od5"/>
                             <constraint firstItem="kVl-JV-bod" firstAttribute="leading" secondItem="5Qg-Hd-VGb" secondAttribute="leadingMargin" id="7sU-pn-1JV"/>
                             <constraint firstItem="hU3-eA-6oT" firstAttribute="leading" secondItem="5Qg-Hd-VGb" secondAttribute="leadingMargin" id="Dy8-GX-1js"/>
+                            <constraint firstItem="kVl-JV-bod" firstAttribute="top" secondItem="YfG-Ir-mJc" secondAttribute="bottom" constant="8" id="E1c-SI-yRZ"/>
                             <constraint firstItem="L9W-HJ-Pe8" firstAttribute="leading" secondItem="5Qg-Hd-VGb" secondAttribute="leading" id="I9y-bg-f6T"/>
                             <constraint firstAttribute="leadingMargin" secondItem="Rka-dq-7gi" secondAttribute="leading" id="Jvy-it-qTW"/>
                             <constraint firstItem="hU3-eA-6oT" firstAttribute="centerX" secondItem="5Qg-Hd-VGb" secondAttribute="centerX" id="Lbs-Qd-23d"/>
@@ -409,15 +412,15 @@
                             <constraint firstItem="PtG-2k-uzm" firstAttribute="centerX" secondItem="5Qg-Hd-VGb" secondAttribute="centerX" id="Vxw-jQ-80B"/>
                             <constraint firstItem="L9W-HJ-Pe8" firstAttribute="leading" secondItem="5Qg-Hd-VGb" secondAttribute="leadingMargin" constant="-20" id="ZG9-Cp-VVd"/>
                             <constraint firstItem="6gJ-EN-hep" firstAttribute="top" secondItem="PtG-2k-uzm" secondAttribute="bottom" id="aOS-Q8-G2V"/>
-                            <constraint firstItem="kVl-JV-bod" firstAttribute="top" secondItem="YfG-Ir-mJc" secondAttribute="bottom" constant="17" id="f2d-GM-OlO"/>
                             <constraint firstItem="yhf-ev-O4t" firstAttribute="top" secondItem="pty-NF-85s" secondAttribute="bottom" constant="8" id="gJS-Kt-614"/>
                             <constraint firstItem="kVl-JV-bod" firstAttribute="trailing" secondItem="5Qg-Hd-VGb" secondAttribute="trailingMargin" id="idh-bS-3AL"/>
-                            <constraint firstItem="hU3-eA-6oT" firstAttribute="top" secondItem="kVl-JV-bod" secondAttribute="bottom" constant="26" id="jRd-aW-lLC"/>
                             <constraint firstItem="kVl-JV-bod" firstAttribute="trailing" secondItem="5Qg-Hd-VGb" secondAttribute="trailingMargin" id="nGq-Jz-rVi"/>
                             <constraint firstItem="PtG-2k-uzm" firstAttribute="top" secondItem="Rka-dq-7gi" secondAttribute="bottom" constant="8" id="nku-2b-YFc"/>
                             <constraint firstItem="pty-NF-85s" firstAttribute="trailing" secondItem="5Qg-Hd-VGb" secondAttribute="trailingMargin" id="raD-44-JWz"/>
                             <constraint firstAttribute="trailingMargin" secondItem="L9W-HJ-Pe8" secondAttribute="trailing" constant="-20" id="suq-GT-hRC"/>
+                            <constraint firstItem="hU3-eA-6oT" firstAttribute="top" secondItem="kVl-JV-bod" secondAttribute="bottom" constant="8" id="uhr-ku-Hud"/>
                             <constraint firstItem="PtG-2k-uzm" firstAttribute="top" secondItem="yhf-ev-O4t" secondAttribute="bottom" constant="8" id="w7k-Rg-wz6"/>
+                            <constraint firstItem="L9W-HJ-Pe8" firstAttribute="top" secondItem="hU3-eA-6oT" secondAttribute="bottom" constant="8" id="x2O-n3-CnN"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Cart" id="vdA-p7-OSC"/>

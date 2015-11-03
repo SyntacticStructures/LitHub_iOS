@@ -37,7 +37,7 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        progressBarView.tintColor = UIColor(red: 0, green: 0.8, blue: 0.2, alpha: 1.0)
         //print("reservations view load")
         ordersTable.dataSource = self
         ordersTable.delegate = self
@@ -59,10 +59,12 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
         tabItem.badgeValue = nil
         
         self.cartItems = mainInstance.cart
-        //print(self.cart.count)
+        if self.cartItems.count > 0 {
+            reservationStatusLabel.text = "Order pending..."
+            progressBarView.setProgress(0.25, animated: true)
+        }
         self.ordersTable.reloadData()
-        //print("view did appear")
-        //getOrder()
+        
         updateReservationsView()
     }
     
@@ -136,7 +138,6 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
                 }
             }
             totalPriceLabel.text = "$" + String(format: "%.2f", self.totalPrice)
-           
         }
     }
 
@@ -185,7 +186,9 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
                     print(response.result.value!)
                     
                 }
-            reservationStatusLabel.text = "Reservation placed. We will notify you when your reservation is ready for pickup."
+            reservationStatusLabel.text = "Order processing..."
+            progressBarView.setProgress(0.5, animated: true)
+
             
         }
         
