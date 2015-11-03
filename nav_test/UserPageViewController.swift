@@ -16,10 +16,29 @@ class UserPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if (keychain.get("email") != nil && keychain.get("password") != nil) {
+        keychain.clear()
+        if (keychain.get("email") != nil && keychain.get("password") != nil && keychain.get("userID") != nil) {
             emailTextField.text = keychain.get("email")
+            mainInstance.userID = keychain.get("userID") as! Int
         } else {
-            self.performSegueWithIdentifier("UserAuthenticated", sender: UIButton())
+            print("Segue to signin")
+//            keychain.clear()
+//            let vc = self.storyboard!.instantiateViewControllerWithIdentifier("goToSignIn") as! SignInViewController
+//            self.presentViewController(vc, animated: true, completion: nil)
+            
+            self.performSegueWithIdentifier("ShowSignInView", sender: UIButton())
         }
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        print("view did appear")
+        emailTextField.text = keychain.get("email")
+    }
+    
+    @IBAction func backToUserViewController(segue: UIStoryboardSegue) {
+        let userViewController = segue.sourceViewController as? UserPageViewController
+        print("attempting to go to user page")
+    }
+    
+    
 }

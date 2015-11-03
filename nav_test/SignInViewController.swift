@@ -69,10 +69,11 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
                             self.userID = integerToCheckUser
                             mainInstance.userID = integerToCheckUser
                             print(mainInstance.userID)
-
-                            self.keychain.set(self.emailTextField.text!, forKey: "email");
-                            self.keychain.set(self.passTextField.text!, forKey: "password");
-                            self.performSegueWithIdentifier("UserAuthenticated",sender: sender)
+                            self.keychain.set("\(self.userID)", forKey: "userID")
+                            self.keychain.set(self.emailTextField.text!, forKey: "email")
+                            self.keychain.set(self.passTextField.text!, forKey: "password")
+                            //print("Segue to signin")
+                            
                         } else {
                             print("This was the error response", response)
                             self.showSimpleAlertWithMessage("Incorrect email or password")

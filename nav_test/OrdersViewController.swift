@@ -16,14 +16,14 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
     //@IBOutlet weak var orderNumberLabel: UILabel!
     //@IBOutlet weak var orderProgressBar: UIProgressView!
     //@IBOutlet weak var dispensaryLabel: UILabel!
-    @IBOutlet weak var cancelButton: UIButton!
+    //@IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var ordersTable: UITableView!
     @IBOutlet weak var reservationIDLabel: UILabel!
     @IBOutlet weak var totalItemsLabel: UILabel!
     @IBOutlet weak var totalPriceLabel: UILabel!
     @IBOutlet weak var placeReservationButton: UIButton!
-    
-    
+    @IBOutlet weak var reservationStatusLabel: UILabel!
+    @IBOutlet weak var progressBarView: UIProgressView!
     
     var cartItems = [Reservation]()
     var reservations = Array<Reservation>()
@@ -183,7 +183,9 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
                 .responseJSON { response in
                     print("in alamofire")
                     print(response.result.value!)
+                    
                 }
+            reservationStatusLabel.text = "Reservation placed. We will notify you when your reservation is ready for pickup."
             
         }
         
@@ -243,7 +245,7 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
             //self.orderStatusLabel.hidden = true
             self.ordersTable.hidden = true
             //self.orderProgressBar.hidden = true
-            self.cancelButton.hidden = true
+            //self.cancelButton.hidden = true
             //self.orderNumberLabel.text = "Your order has been canceled"
             //self.dispensaryLabel.text = "Thank you"
         }
