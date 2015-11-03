@@ -4,3 +4,4 @@ use_frameworks!
 
 pod 'Alamofire'
 pod 'GoogleMaps'
+pod 'FontAwesome.swift'

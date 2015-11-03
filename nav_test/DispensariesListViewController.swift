@@ -31,8 +31,8 @@ class DispensariesListViewController: UIViewController, UITableViewDelegate, UIT
         //print(string)
         Alamofire.request(.GET, string)
             .responseJSON { response in
-                if response.data != nil {
-                //case .Success(let data):
+                if response.result.isSuccess {
+                    //case .Success(let data):
                     let arrayOfDispensaries = JSON(response.result.value!)
                     for var i = 0; i < arrayOfDispensaries.count; ++i {
                         let dispensaryId = arrayOfDispensaries[i]["id"].int
@@ -44,7 +44,7 @@ class DispensariesListViewController: UIViewController, UITableViewDelegate, UIT
                         let dispensaryCity = arrayOfDispensaries[i]["City"].string
                         let dispensaryPhone = arrayOfDispensaries[i]["phone"].string
                         let dispensaryLogo = arrayOfDispensaries[i]["logo"].string
-                        let dispensary = mkDispensary(title: dispensaryName!, isMedical: Bool(), id: dispensaryId!, name: dispensaryName!, address: dispensaryAdd!, city: dispensaryCity!, latitude: dispensaryLat!, longitude: dispensaryLng!, state: dispensaryState!, phone: dispensaryPhone!, distance: 0.0, logo: dispensaryLogo!)
+                        let dispensary = mkDispensary(title: dispensaryName!, id: dispensaryId!, name: dispensaryName!, address: dispensaryAdd!, city: dispensaryCity!, latitude: dispensaryLat!, longitude: dispensaryLng!, state: dispensaryState!, phone: dispensaryPhone!, distance: 0.0, logo: dispensaryLogo!)
                         dispensary.latitude = dispensaryLat!
                         dispensary.longitude = dispensaryLng!
                         self.dispensaries.append(dispensary)
@@ -53,8 +53,8 @@ class DispensariesListViewController: UIViewController, UITableViewDelegate, UIT
                     self.tableView.reloadData()
                     
                 } else {
-                //case .Failure(_, let error):
-                    print("Request failed with error")
+                    //case .Failure(_, let error):
+                    print("Request failed with error \(response.result.error)")
                     
                 }
         }
@@ -91,9 +91,9 @@ class DispensariesListViewController: UIViewController, UITableViewDelegate, UIT
         cell.dispensaryPhone!.text = dispensary.phone
         cell.dispensaryStreetAddress!.text = dispensary.address
         cell.dispensaryCityState!.text = dispensary.city.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) + ", " + dispensary.state
-//        cell.dispensaryHours!.text = dispensary.hours
+        //        cell.dispensaryHours!.text = dispensary.hours
         
-       //print(dispensary.logo, "cat")
+        //print(dispensary.logo, "cat")
         
         let request: NSURLRequest = NSURLRequest(URL: NSURL(string: dispensary.logo)!)
         let mainQueue = NSOperationQueue.mainQueue()
@@ -126,9 +126,6 @@ class DispensariesListViewController: UIViewController, UITableViewDelegate, UIT
             menuViewController.dispensary = dispensaries[indexPath.row]
         }
         
-        
     }
     
-    
-
 }

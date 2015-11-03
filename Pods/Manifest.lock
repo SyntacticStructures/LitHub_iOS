@@ -1,13 +1,16 @@
 PODS:
   - Alamofire (3.1.0)
+  - FontAwesome.swift (0.6.2)
   - GoogleMaps (1.10.5)
 
 DEPENDENCIES:
   - Alamofire
+  - FontAwesome.swift
   - GoogleMaps
 
 SPEC CHECKSUMS:
   Alamofire: 415bd7f56197722978759078486689f7ef913dce
+  FontAwesome.swift: d40ac0a660f079c77945bab632ca20bf46ddc1ac
   GoogleMaps: da51c62c338c2d9c47cdad470a0d1e0e4b8544e4
 
-COCOAPODS: 0.38.2
+COCOAPODS: 0.39.0
