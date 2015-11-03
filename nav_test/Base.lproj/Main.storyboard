@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="hyw-Qz-khn">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="hyw-Qz-khn">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -971,8 +971,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="507"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="B0z-26-lRa">
-                                <rect key="frame" x="7" y="0.0" width="560" height="507"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="B0z-26-lRa">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="507"/>
                                 <animations/>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QFj-5b-HYy">
@@ -989,9 +989,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="B0z-26-lRa" firstAttribute="top" secondItem="JcT-bY-tR6" secondAttribute="bottom" id="1oz-bs-aFp"/>
+                            <constraint firstItem="B0z-26-lRa" firstAttribute="trailing" secondItem="23u-wa-H6q" secondAttribute="trailingMargin" constant="20" id="3tT-8R-0qM"/>
                             <constraint firstItem="Wag-wx-sZ6" firstAttribute="top" secondItem="B0z-26-lRa" secondAttribute="bottom" id="Pj4-HA-fgQ"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="B0z-26-lRa" secondAttribute="trailing" id="bNY-t9-pKb"/>
-                            <constraint firstItem="B0z-26-lRa" firstAttribute="leading" secondItem="23u-wa-H6q" secondAttribute="leadingMargin" id="jVV-Ux-Bt4"/>
+                            <constraint firstItem="B0z-26-lRa" firstAttribute="leading" secondItem="23u-wa-H6q" secondAttribute="leadingMargin" constant="-20" id="k8e-2n-tik"/>
                         </constraints>
                     </view>
                     <connections>
@@ -1137,7 +1137,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xHi-PV-3ea" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5405" y="550.5"/>
+            <point key="canvasLocation" x="4543" y="436.5"/>
         </scene>
     </scenes>
     <resources>

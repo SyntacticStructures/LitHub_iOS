@@ -11,7 +11,6 @@ import MapKit
 
 class mkDispensary: NSObject, MKAnnotation {
     var title: String?
-    var isMedical: Bool?
     var id: Int
     var name: String
     var address: String
@@ -24,7 +23,7 @@ class mkDispensary: NSObject, MKAnnotation {
     var distance: Double
     //var hours: String
     
-    init(title: String, isMedical: Bool, id: Int, name: String, address: String, city: String, latitude: Double, longitude: Double, state: String, phone: String, distance: Double, logo: String) {
+    init(title: String, id: Int, name: String, address: String, city: String, latitude: Double, longitude: Double, state: String, phone: String, distance: Double, logo: String) {
         self.title = name
         self.id = id
         self.name = name
