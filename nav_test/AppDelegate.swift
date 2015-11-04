@@ -33,7 +33,55 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITabBar.appearance().tintColor = UIColor.grayColor()
         UITabBar.appearance().selectedImageTintColor = UIColor(red: 0, green: 0.8, blue: 0.2, alpha: 1.0)
         
+        
+        
         return true
+    }
+    
+    //Push notifications
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+            //Process the deviceToken and send it to your server
+        let trimEnds = {
+            deviceToken.description.stringByTrimmingCharactersInSet(
+                NSCharacterSet(charactersInString: "<>"))
+        }
+        let cleanToken = {
+            trimEnds.stringByReplacingOccurrencesOfString(
+                " ", withString: "", options: nil)
+        }
+        
+        
+        
+    }
+    //Push notifications
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+            //Log an error for debugging purposes, user doesn't need to know
+            NSLog("Failed to get token; error: %@", error) 
+    }
+    
+    //Push notifications
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+        // display the userInfo
+        if let notification = userInfo["aps"] as? NSDictionary,
+            let alert = notification["alert"] as? String {
+                var alertCtrl = UIAlertController(title: "Time Entry", message: alert as String, preferredStyle: UIAlertControllerStyle.Alert)
+                alertCtrl.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                // Find the presented VC...
+                var presentedVC = self.window?.rootViewController
+                while (presentedVC!.presentedViewController != nil)  {
+                    presentedVC = presentedVC!.presentedViewController
+                }
+                presentedVC!.presentViewController(alertCtrl, animated: true, completion: nil)
+                
+                // call the completion handler
+                // -- pass in NoData, since no new data was fetched from the server.
+                completionHandler(UIBackgroundFetchResult.NoData)
+        }
+    }
+    
+    //System Version
+    func getMajorSystemVersion() -> Int {
+        return String(Array(UIDevice.currentDevice.systemVersion)[0]).toInt()!
     }
 
     func applicationWillResignActive(application: UIApplication) {
