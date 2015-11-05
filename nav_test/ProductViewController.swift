@@ -24,6 +24,7 @@ class ProductViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     //@IBOutlet weak var thcPercentage: UILabel!
     //@IBOutlet weak var growDifficulty: UILabel!
     @IBOutlet weak var amountSelected: UIPickerView!
+    @IBOutlet weak var addToCartButton: UIButton!
     
     @IBAction func removeButtonPressed(sender: UIButton) {
     
@@ -31,6 +32,7 @@ class ProductViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addToCartButton.tintColor = mainInstance.color
         getCurrentUser()
         //        getOrder()
         self.amountSelected.delegate = self

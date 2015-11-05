@@ -24,12 +24,43 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBOutlet weak var productTableView: UITableView!
     @IBOutlet weak var dispensaryName: UINavigationItem!
+    
     @IBOutlet weak var allButton: UIButton!
     @IBOutlet weak var indicaButton: UIButton!
     @IBOutlet weak var hybridButton: UIButton!
     @IBOutlet weak var sativaButton: UIButton!
     @IBOutlet weak var edibleButton: UIButton!
+    
+    @IBOutlet weak var allLabel: UILabel!
+    @IBOutlet weak var indicaLabel: UILabel!
+    @IBOutlet weak var hybridLabel: UILabel!
+    @IBOutlet weak var sativaLabel: UILabel!
+    @IBOutlet weak var edibleLabel: UILabel!
+    
+    
     @IBOutlet weak var filterLabelDescription: UILabel!
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        self.productTableView.dataSource = self
+        self.productTableView.delegate = self
+        
+        indicaLabel.hidden = true
+        hybridLabel.hidden = true
+        sativaLabel.hidden = true
+        edibleLabel.hidden = true
+        
+        getMenu()
+        productTableView.reloadData()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+
     
     @IBAction func filterButtonPressed(sender: UIButton) {
         if previousButtonTag == 1 {
@@ -52,6 +83,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if sender.tag == 1 {
             //print(NSThread.isMainThread() ? "Main Thread" : "Not on Main Thread")
             indicaButton.setBackgroundImage(UIImage(named: "Indica"), forState: UIControlState.Normal)
+            indicaLabel.hidden = false
             //indicaButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
             //hybridButton.setBackgroundImage(UIImage(named: "HybridDark"), forState: UIControlState.Normal)
             filter("Indica")
@@ -59,19 +91,23 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
         } else if sender.tag == 2 {
             hybridButton.setBackgroundImage(UIImage(named: "Hybrid"), forState: UIControlState.Normal)
+            hybridLabel.hidden = false
             //sender.titleLabel?.textColor = UIColor.blackColor()
             filter("Hybrid")
             filterLabelDescription.text = "Hybrid strains are a cross between Hybrid and Sativa dominant strains"
         } else if sender.tag == 3 {
             sativaButton.setBackgroundImage(UIImage(named: "Sativa"), forState: UIControlState.Normal)
+            sativaLabel.hidden = false
             filter("Sativa")
             filterLabelDescription.text = "Sativa strains tend to be uplifting and creative with cerebrally-focused effects"
         } else if sender.tag == 4 {
             edibleButton.setBackgroundImage(UIImage(named: "Edible"), forState: UIControlState.Normal)
+            edibleLabel.hidden = false
             filter("Edibles")
             filterLabelDescription.text = "An edible product that contains THC"
         } else if sender.tag == 5 {
             allButton.setBackgroundImage(UIImage(named: "Blunt"), forState: UIControlState.Normal)
+            allLabel.hidden = false
             didPressFilterButton = false
             filterLabelDescription.text = "All items"
             //filter("Other")
@@ -80,21 +116,6 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         //print(NSThread.isMainThread() ? "Main Thread" : "Not on Main Thread")
         productTableView.reloadData()
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        //product tableView source and delegate
-        self.productTableView.dataSource = self
-        self.productTableView.delegate = self
-        getMenu()
-        productTableView.reloadData()
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     
    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        if menuFiltered.count == 0 {
@@ -111,15 +132,9 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-//        let cell = productTableView.dequeueReusableCellWithIdentifier("StrainCell") as? StrainCell
-//        print("after cell\(cell)")
-//        if menuFiltered.count != 0 {
-//            cell!.nameLabel?.text = menuFiltered[indexPath.row].strainName as? String
-//        } else {
-//            cell!.nameLabel?.text = menu[indexPath.row].strainName as? String
-//        }
-//        return cell!
         let cell = productTableView.dequeueReusableCellWithIdentifier("StrainCell") as? StrainCell
+        cell!.tintColor = mainInstance.color
+        
         if didPressFilterButton == false {
             cell!.nameLabel?.text = menu[indexPath.row].strainName
         } else {
@@ -129,6 +144,10 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        performSegueWithIdentifier("ShowProduct", sender: tableView.cellForRowAtIndexPath(indexPath))
+    }
+    
+    func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
         performSegueWithIdentifier("ShowProduct", sender: tableView.cellForRowAtIndexPath(indexPath))
     }
     

@@ -24,30 +24,30 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var placeReservationButton: UIButton!
     @IBOutlet weak var reservationStatusLabel: UILabel!
     @IBOutlet weak var progressBarView: UIProgressView!
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
     var cartItems = [Reservation]()
-    var reservations = Array<Reservation>()
+    var reservations = [Reservation]()
     var totalPrice = 0.00
     //var prices = Array<String>()
     //var email = String()
     //var id = String()
     var orderId = String()
     var userID: Int?
-    //    var currentUser = Array<NSDictionary>()
+    
+    var didPlaceReservation = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         progressBarView.tintColor = UIColor(red: 0, green: 0.8, blue: 0.2, alpha: 1.0)
+        print(mainInstance.color)
+        placeReservationButton.backgroundColor = mainInstance.color
         //print("reservations view load")
         ordersTable.dataSource = self
         ordersTable.delegate = self
         
-        //let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "DismissKeyboard")
         getCurrentUser()
-        //getOrder()
-        //print("view did load")
-        //print(reservations.count)
-        //view.addGestureRecognizer(tap)
+        
         
     }
     
@@ -59,7 +59,7 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
         tabItem.badgeValue = nil
         
         self.cartItems = mainInstance.cart
-        if self.cartItems.count > 0 {
+        if self.cartItems.count > 0 &&  didPlaceReservation == false {
             reservationStatusLabel.text = "Order pending..."
             progressBarView.setProgress(0.25, animated: true)
         }
@@ -147,6 +147,7 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     @IBAction func placeReservationButtonPressed(sender: UIButton) {
+        didPlaceReservation = true
         //print("place reservation pressed")
         let status = 0
         let date = String(NSDate())
@@ -186,13 +187,14 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
                     print(response.result.value!)
                     
                 }
-            reservationStatusLabel.text = "Order processing..."
+            reservationStatusLabel.text = "Order processing"
             progressBarView.setProgress(0.5, animated: true)
-
+            activityIndicator.startAnimating()
             
         }
         
     }
+    
     
     
     //add an order

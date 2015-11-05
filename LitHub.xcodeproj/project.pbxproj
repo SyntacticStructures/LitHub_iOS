@@ -288,7 +288,7 @@
 				TargetAttributes = {
 					0455E2921BA6CC3B00061792 = {
 						CreatedOnToolsVersion = 7.0;
-						DevelopmentTeam = ZYEHCDLV75;
+						DevelopmentTeam = GKTKN5Z262;
 					};
 					0455E2A61BA6CC3C00061792 = {
 						CreatedOnToolsVersion = 7.0;
@@ -613,7 +613,7 @@
 					"\"SystemConfiguration\"",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "test.nav-test";
+				PRODUCT_BUNDLE_IDENTIFIER = com.getlithub.lithub;
 				PRODUCT_NAME = LitHub;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -670,7 +670,7 @@
 					"\"SystemConfiguration\"",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "test.nav-test";
+				PRODUCT_BUNDLE_IDENTIFIER = com.getlithub.lithub;
 				PRODUCT_NAME = LitHub;
 				PROVISIONING_PROFILE = "";
 			};

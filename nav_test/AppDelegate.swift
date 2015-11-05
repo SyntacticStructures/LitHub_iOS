@@ -13,6 +13,7 @@ import GoogleMaps
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var color = UIColor(red: 255/255, green: 167/255, blue: 18/255, alpha: 1.0)
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -22,16 +23,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false)
         
-        //UIView.appearance().tintColor = UIColor(red: 0, green: 0.8, blue: 0.2, alpha: 1.0)
-        UINavigationBar.appearance().barTintColor = UIColor(red: 0, green: 0.8, blue: 0.2, alpha: 1.0)
+        UINavigationBar.appearance().barTintColor = color
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
-        UISegmentedControl.appearance().tintColor = UIColor(red: 0, green: 0.8, blue: 0.2, alpha: 1.0)
+        UISegmentedControl.appearance().tintColor = color
         
         let tabBarController = self.window?.rootViewController as! UITabBarController
         UITabBar.appearance().tintColor = UIColor.grayColor()
-        UITabBar.appearance().selectedImageTintColor = UIColor(red: 0, green: 0.8, blue: 0.2, alpha: 1.0)
+        UITabBar.appearance().selectedImageTintColor = color
         
         return true
     }
