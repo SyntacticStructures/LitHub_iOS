@@ -33,7 +33,11 @@ class UserPageViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         print("view did appear")
         emailTextField.text = keychain.get("email")
+        
+        
     }
+    
+    
     
     @IBAction func backToUserViewController(segue: UIStoryboardSegue) {
         let userViewController = segue.sourceViewController as? UserPageViewController
