@@ -270,7 +270,7 @@ class MapkitViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
     }
     
     func initializeNotificationServices() -> Void {
-        let settings = UIUserNotificationSettings(forTypes: .Sound | .Alert | .Badge, categories: nil)
+        let settings = UIUserNotificationSettings(forTypes: [.Sound, .Alert, .Badge], categories: nil)
         UIApplication.sharedApplication().registerUserNotificationSettings(settings)
         
         // This is an asynchronous method to retrieve a Device Token
