@@ -45,8 +45,8 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
         //print("reservations view load")
         ordersTable.dataSource = self
         ordersTable.delegate = self
-        
         getCurrentUser()
+        getOrder()
         
         
     }
@@ -110,8 +110,13 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
     
     func updateReservationsView() {
         //print("getting reservations count")
-        if cartItems.count > 0 {
-            print("hello")
+        if reservations.count > 0 {
+            print("update reservations view for existing order")
+            self.totalPrice = 0.00
+            totalItemsLabel.text = "Total: \(reservations.count) items(s)"
+        
+        } else if cartItems.count > 0 {
+            //print("hello")
             self.totalPrice = 0.00
             //print(self.totalPrice)
             let cartItem = cartItems[0]
@@ -144,6 +149,7 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
     
     func getCurrentUser() {
         self.userID = mainInstance.userID
+        //print(self.userID)
     }
     
     @IBAction func placeReservationButtonPressed(sender: UIButton) {
@@ -218,7 +224,7 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func getOrder() {
-        //print(id)
+        print("at get order", self.userID!)
         let string = "http://getlithub.herokuapp.com/getReservations"
         let parameters = [
             "id": self.userID!
@@ -229,7 +235,7 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
                     //case .Success(let data):
                         let arrayOfReservations = JSON(response.result.value!)
                         self.reservations = [Reservation]()
-                        //print(arrayOfReservations)
+                        print("this is the orders,", arrayOfReservations)
                         for var i = 0; i < arrayOfReservations.count; ++i {
                             let reservationID = arrayOfReservations[i]["id"].int
                             let status = arrayOfReservations[i]["status"].string
