@@ -25,8 +25,6 @@ class MapkitViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //PUSH NOTIFICATIONS
-        initializeNotificationServices();
         
         self.mapView.delegate = self
         locationManager.requestWhenInUseAuthorization()
@@ -269,16 +267,6 @@ class MapkitViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         }
     }
     
-    func initializeNotificationServices() -> Void {
-        let settings = UIUserNotificationSettings(forTypes: .Sound | .Alert | .Badge, categories: nil)
-        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
-        
-        // This is an asynchronous method to retrieve a Device Token
-        // Callbacks are in AppDelegate.swift
-        // Success = didRegisterForRemoteNotificationsWithDeviceToken
-        // Fail = didFailToRegisterForRemoteNotificationsWithError
-        UIApplication.sharedApplication().registerForRemoteNotifications()
-    }
 }
 
 
