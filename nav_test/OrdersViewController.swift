@@ -24,30 +24,30 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var placeReservationButton: UIButton!
     @IBOutlet weak var reservationStatusLabel: UILabel!
     @IBOutlet weak var progressBarView: UIProgressView!
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
     var cartItems = [Reservation]()
-    var reservations = Array<Reservation>()
+    var reservations = [Reservation]()
     var totalPrice = 0.00
     //var prices = Array<String>()
     //var email = String()
     //var id = String()
     var orderId = String()
     var userID: Int?
-    //    var currentUser = Array<NSDictionary>()
+    
+    var didPlaceReservation = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        progressBarView.tintColor = UIColor(red: 0, green: 0.8, blue: 0.2, alpha: 1.0)
+        placeReservationButton.backgroundColor = mainInstance.color
         //print("reservations view load")
         ordersTable.dataSource = self
         ordersTable.delegate = self
         
-        //let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "DismissKeyboard")
         getCurrentUser()
-        //getOrder()
-        //print("view did load")
-        //print(reservations.count)
-        //view.addGestureRecognizer(tap)
+        
         
     }
     
@@ -59,10 +59,12 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
         tabItem.badgeValue = nil
         
         self.cartItems = mainInstance.cart
-        //print(self.cart.count)
+        if self.cartItems.count > 0 &&  didPlaceReservation == false {
+            reservationStatusLabel.text = "Order pending..."
+            progressBarView.setProgress(0.25, animated: true)
+        }
         self.ordersTable.reloadData()
-        //print("view did appear")
-        //getOrder()
+        
         updateReservationsView()
     }
     
@@ -136,7 +138,6 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
                 }
             }
             totalPriceLabel.text = "$" + String(format: "%.2f", self.totalPrice)
-           
         }
     }
 
@@ -146,6 +147,7 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     @IBAction func placeReservationButtonPressed(sender: UIButton) {
+        didPlaceReservation = true
         //print("place reservation pressed")
         let status = 0
         let date = String(NSDate())
@@ -185,50 +187,14 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
                     print(response.result.value!)
                     
                 }
-            reservationStatusLabel.text = "Reservation placed. We will notify you when your reservation is ready for pickup."
+            reservationStatusLabel.text = "Order processing"
+            progressBarView.setProgress(0.5, animated: true)
+            activityIndicator.startAnimating()
             
         }
         
     }
     
-    
-    //add an order
-    //    @IBAction func addButtonPressed(sender: UIButton) {
-    //        let row = amountSelected.selectedRowInComponent(0)
-    //        let string = "http://getlithub.herokuapp.com/addOrder"
-    //        var gram = "0"
-    //        var eight = "0"
-    //        var quarter = "0"
-    //        var half = "0"
-    //        var oz = "0"
-    //        switch row {
-    //        case 0:
-    //            gram = "1"
-    //        case 1:
-    //            eight = "1"
-    //        case 2:
-    //            quarter = "1"
-    //        case 3:
-    //            half = "1"
-    //        case 4:
-    //            oz = "1"
-    //        default:
-    //            print("error. default thrown in switch case in productViewController")
-    //        }
-    //        print("this is the item row selected", row)
-    //        let date = String(NSDate())
-    //        let orderData = ["status": 0, "created_at": date, "updated_at": date, "user_id": currentUserId!, "vendor_id": menuItem.vendorID, "quantity_gram": gram, "quantity_eigth": eight, "quantity_quarter": quarter, "quantity_half": half, "quantity_oz": oz, "strain_id": menuItem.strainID]
-    //        //Alamofire request
-    //        Alamofire.request(.POST, string, parameters: orderData as! [String : AnyObject], encoding: .JSON)
-    //            .responseJSON { request, response, result in switch result {
-    //            case .Success(let data):
-    //                print("Order input was a success. This should be empty", data)
-    //            case .Failure(_, let error):
-    //                print("There was an error submitting order information")
-    //                }
-    //        }
-    //
-    //    }
 
     
     @IBAction func cancelOrder(sender: UIButton) {
