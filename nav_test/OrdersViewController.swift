@@ -39,8 +39,8 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         progressBarView.tintColor = UIColor(red: 0, green: 0.8, blue: 0.2, alpha: 1.0)
-        print(mainInstance.color)
         placeReservationButton.backgroundColor = mainInstance.color
         //print("reservations view load")
         ordersTable.dataSource = self
@@ -195,45 +195,6 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
         
     }
     
-    
-    
-    //add an order
-    //    @IBAction func addButtonPressed(sender: UIButton) {
-    //        let row = amountSelected.selectedRowInComponent(0)
-    //        let string = "http://getlithub.herokuapp.com/addOrder"
-    //        var gram = "0"
-    //        var eight = "0"
-    //        var quarter = "0"
-    //        var half = "0"
-    //        var oz = "0"
-    //        switch row {
-    //        case 0:
-    //            gram = "1"
-    //        case 1:
-    //            eight = "1"
-    //        case 2:
-    //            quarter = "1"
-    //        case 3:
-    //            half = "1"
-    //        case 4:
-    //            oz = "1"
-    //        default:
-    //            print("error. default thrown in switch case in productViewController")
-    //        }
-    //        print("this is the item row selected", row)
-    //        let date = String(NSDate())
-    //        let orderData = ["status": 0, "created_at": date, "updated_at": date, "user_id": currentUserId!, "vendor_id": menuItem.vendorID, "quantity_gram": gram, "quantity_eigth": eight, "quantity_quarter": quarter, "quantity_half": half, "quantity_oz": oz, "strain_id": menuItem.strainID]
-    //        //Alamofire request
-    //        Alamofire.request(.POST, string, parameters: orderData as! [String : AnyObject], encoding: .JSON)
-    //            .responseJSON { request, response, result in switch result {
-    //            case .Success(let data):
-    //                print("Order input was a success. This should be empty", data)
-    //            case .Failure(_, let error):
-    //                print("There was an error submitting order information")
-    //                }
-    //        }
-    //
-    //    }
 
     
     @IBAction func cancelOrder(sender: UIButton) {

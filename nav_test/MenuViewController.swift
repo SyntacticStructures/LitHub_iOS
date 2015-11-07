@@ -83,7 +83,12 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if sender.tag == 1 {
             //print(NSThread.isMainThread() ? "Main Thread" : "Not on Main Thread")
             indicaButton.setBackgroundImage(UIImage(named: "Indica"), forState: UIControlState.Normal)
+            
             indicaLabel.hidden = false
+            allLabel.hidden = true
+            hybridLabel.hidden = true
+            sativaLabel.hidden = true
+            edibleLabel.hidden = true
             //indicaButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
             //hybridButton.setBackgroundImage(UIImage(named: "HybridDark"), forState: UIControlState.Normal)
             filter("Indica")
@@ -91,23 +96,42 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
         } else if sender.tag == 2 {
             hybridButton.setBackgroundImage(UIImage(named: "Hybrid"), forState: UIControlState.Normal)
+            
             hybridLabel.hidden = false
-            //sender.titleLabel?.textColor = UIColor.blackColor()
+            allLabel.hidden = true
+            indicaLabel.hidden = true
+            sativaLabel.hidden = true
+            edibleLabel.hidden = true
+            
             filter("Hybrid")
             filterLabelDescription.text = "Hybrid strains are a cross between Hybrid and Sativa dominant strains"
         } else if sender.tag == 3 {
             sativaButton.setBackgroundImage(UIImage(named: "Sativa"), forState: UIControlState.Normal)
+            
             sativaLabel.hidden = false
+            allLabel.hidden = true
+            indicaLabel.hidden = true
+            hybridLabel.hidden = true
+            edibleLabel.hidden = true
+            
             filter("Sativa")
             filterLabelDescription.text = "Sativa strains tend to be uplifting and creative with cerebrally-focused effects"
         } else if sender.tag == 4 {
             edibleButton.setBackgroundImage(UIImage(named: "Edible"), forState: UIControlState.Normal)
             edibleLabel.hidden = false
+            allLabel.hidden = true
+            indicaLabel.hidden = true
+            hybridLabel.hidden = true
+            sativaLabel.hidden = true
             filter("Edibles")
             filterLabelDescription.text = "An edible product that contains THC"
         } else if sender.tag == 5 {
             allButton.setBackgroundImage(UIImage(named: "Blunt"), forState: UIControlState.Normal)
             allLabel.hidden = false
+            indicaLabel.hidden = true
+            hybridLabel.hidden = true
+            sativaLabel.hidden = true
+            edibleLabel.hidden = true
             didPressFilterButton = false
             filterLabelDescription.text = "All items"
             //filter("Other")
