@@ -8,15 +8,12 @@
 
 import UIKit
 import Alamofire
+import Socket_IO_Client_Swift
 
 class OrdersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-
-    //@IBOutlet weak var orderStatusLabel: UILabel!
-    //@IBOutlet weak var orderNumberLabel: UILabel!
-    //@IBOutlet weak var orderProgressBar: UIProgressView!
-    //@IBOutlet weak var dispensaryLabel: UILabel!
-    //@IBOutlet weak var cancelButton: UIButton!
+    let socket = SocketIOClient(socketURL: "192.168.1.64:8888", options: [.Log(true)])
+    
     @IBOutlet weak var ordersTable: UITableView!
     @IBOutlet weak var reservationIDLabel: UILabel!
     @IBOutlet weak var totalItemsLabel: UILabel!
@@ -39,6 +36,18 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.socket.on("connect") { data, ack in
+            print("ios:: socket connected")
+            
+            //self.socket.emit("iosTest", "this is a test from ios")
+        }
+        
+        
+        
+        self.socket.connect()
+        
+        
         
         progressBarView.tintColor = UIColor(red: 0, green: 0.8, blue: 0.2, alpha: 1.0)
         placeReservationButton.backgroundColor = mainInstance.color
@@ -70,41 +79,81 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
     
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cartItems.count
+        var totalReservations = 0
+        if reservations.count > 0 {
+            totalReservations = reservations.count
+        } else if cartItems.count > 0 {
+            totalReservations = cartItems.count
+        }
+        return totalReservations
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("OrderCell") as! OrderCell
-        let cartItem = cartItems[indexPath.row]
-        //print(reservation)
-        //let price = prices[0]
-        cell.strainLabel.text = cartItem.strainName
-        if cartItem.quantityGram != 0 {
-            cell.quantityLabel.text = "\(cartItem.quantityGram) Gram(s)"
-            let gramTotal = cartItem.priceGram * Double(cartItem.quantityGram)
-            self.totalPrice += gramTotal
-            cell.priceLabel.text = "$" + String(format: "%.2f", gramTotal)
-        } else if cartItem.quantityEigth != 0 {
-            cell.quantityLabel.text = "\(cartItem.quantityEigth) Eigth(s)"
-            let eigthTotal = cartItem.priceEigth * Double(cartItem.quantityEigth)
-            //print(eigthTotal)
-            self.totalPrice += eigthTotal
-            //print(self.totalPrice)
-            cell.priceLabel.text = "$" + String(format: "%.2f", eigthTotal)
-        } else if cartItem.quantityQuarter != 0 {
-            cell.quantityLabel.text = "\(cartItem.quantityQuarter) Quarter(s)"
-            let quarterTotal = cartItem.priceQuarter * Double(cartItem.quantityQuarter)
-            cell.priceLabel.text = "$" + String(format: "%.2f", quarterTotal)
-        } else if cartItem.quantityHalf != 0 {
-            cell.quantityLabel.text = "\(cartItem.quantityHalf) Half(s)"
-            let halfTotal = cartItem.priceHalf * Double(cartItem.quantityHalf)
-            cell.priceLabel.text = "$" + String(format: "%.2f", halfTotal)
-        } else if cartItem.quantityOz != 0 {
-            cell.quantityLabel.text = "\(cartItem.quantityOz) Oz(s)"
-            let ozTotal = cartItem.priceOz * Double(cartItem.quantityOz)
-            cell.priceLabel.text = "$" + String(format: "%.2f", ozTotal)
+        if reservations.count > 0 {
+            let reservationItem = reservations[indexPath.row]
+            //print(reservation)
+            //let price = prices[0]
+            cell.strainLabel.text = reservationItem.strainName
+            if reservationItem.quantityGram != 0 {
+                cell.quantityLabel.text = "\(reservationItem.quantityGram) Gram(s)"
+                let gramTotal = reservationItem.priceGram * Double(reservationItem.quantityGram)
+                self.totalPrice += gramTotal
+                cell.priceLabel.text = "$" + String(format: "%.2f", gramTotal)
+            } else if reservationItem.quantityEigth != 0 {
+                cell.quantityLabel.text = "\(reservationItem.quantityEigth) Eigth(s)"
+                let eigthTotal = reservationItem.priceEigth * Double(reservationItem.quantityEigth)
+                //print(eigthTotal)
+                self.totalPrice += eigthTotal
+                //print(self.totalPrice)
+                cell.priceLabel.text = "$" + String(format: "%.2f", eigthTotal)
+            } else if reservationItem.quantityQuarter != 0 {
+                cell.quantityLabel.text = "\(reservationItem.quantityQuarter) Quarter(s)"
+                let quarterTotal = reservationItem.priceQuarter * Double(reservationItem.quantityQuarter)
+                cell.priceLabel.text = "$" + String(format: "%.2f", quarterTotal)
+            } else if reservationItem.quantityHalf != 0 {
+                cell.quantityLabel.text = "\(reservationItem.quantityHalf) Half(s)"
+                let halfTotal = reservationItem.priceHalf * Double(reservationItem.quantityHalf)
+                cell.priceLabel.text = "$" + String(format: "%.2f", halfTotal)
+            } else if reservationItem.quantityOz != 0 {
+                cell.quantityLabel.text = "\(reservationItem.quantityOz) Oz(s)"
+                let ozTotal = reservationItem.priceOz * Double(reservationItem.quantityOz)
+                cell.priceLabel.text = "$" + String(format: "%.2f", ozTotal)
+            }
+            //cell.priceLabel.text = price
+        } else if cartItems.count > 0 {
+            let cartItem = cartItems[indexPath.row]
+            //print(reservation)
+            //let price = prices[0]
+            cell.strainLabel.text = cartItem.strainName
+            if cartItem.quantityGram != 0 {
+                cell.quantityLabel.text = "\(cartItem.quantityGram) Gram(s)"
+                let gramTotal = cartItem.priceGram * Double(cartItem.quantityGram)
+                self.totalPrice += gramTotal
+                cell.priceLabel.text = "$" + String(format: "%.2f", gramTotal)
+            } else if cartItem.quantityEigth != 0 {
+                cell.quantityLabel.text = "\(cartItem.quantityEigth) Eigth(s)"
+                let eigthTotal = cartItem.priceEigth * Double(cartItem.quantityEigth)
+                //print(eigthTotal)
+                self.totalPrice += eigthTotal
+                //print(self.totalPrice)
+                cell.priceLabel.text = "$" + String(format: "%.2f", eigthTotal)
+            } else if cartItem.quantityQuarter != 0 {
+                cell.quantityLabel.text = "\(cartItem.quantityQuarter) Quarter(s)"
+                let quarterTotal = cartItem.priceQuarter * Double(cartItem.quantityQuarter)
+                cell.priceLabel.text = "$" + String(format: "%.2f", quarterTotal)
+            } else if cartItem.quantityHalf != 0 {
+                cell.quantityLabel.text = "\(cartItem.quantityHalf) Half(s)"
+                let halfTotal = cartItem.priceHalf * Double(cartItem.quantityHalf)
+                cell.priceLabel.text = "$" + String(format: "%.2f", halfTotal)
+            } else if cartItem.quantityOz != 0 {
+                cell.quantityLabel.text = "\(cartItem.quantityOz) Oz(s)"
+                let ozTotal = cartItem.priceOz * Double(cartItem.quantityOz)
+                cell.priceLabel.text = "$" + String(format: "%.2f", ozTotal)
+            }
+            //cell.priceLabel.text = price
+            
         }
-        //cell.priceLabel.text = price
         return cell
     }
     
@@ -114,6 +163,26 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
             print("update reservations view for existing order")
             self.totalPrice = 0.00
             totalItemsLabel.text = "Total: \(reservations.count) items(s)"
+            for var i = 0; i < reservations.count; ++i {
+                if reservations[i].quantityGram != 0 {
+                    let gramTotal = reservations[i].priceGram * Double(reservations[i].quantityGram)
+                    self.totalPrice += gramTotal
+                } else if reservations[i].quantityEigth != 0 {
+                    let eigthTotal = reservations[i].priceEigth * Double(reservations[i].quantityEigth)
+                    self.totalPrice += eigthTotal
+                } else if reservations[i].quantityQuarter != 0 {
+                    let quarterTotal = reservations[i].priceQuarter * Double(reservations[i].quantityQuarter)
+                    self.totalPrice += quarterTotal
+                } else if reservations[i].quantityHalf != 0 {
+                    let halfTotal = reservations[i].priceHalf * Double(reservations[i].quantityHalf)
+                    self.totalPrice += halfTotal
+                } else if reservations[i].quantityOz != 0 {
+                    let ozTotal = reservations[i].priceOz * Double(reservations[i].quantityOz)
+                    self.totalPrice += ozTotal
+                }
+                totalPriceLabel.text = "$" + String(format: "%.2f", self.totalPrice)
+
+            }
         
         } else if cartItems.count > 0 {
             //print("hello")
@@ -191,11 +260,12 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
                 .responseJSON { response in
                     print("in alamofire")
                     print(response.result.value!)
+                    self.socket.emit("PlaceResvButtonPressed")
                     
                 }
             reservationStatusLabel.text = "Order processing"
             progressBarView.setProgress(0.5, animated: true)
-            activityIndicator.startAnimating()
+            //activityIndicator.startAnimating()
             
         }
         
