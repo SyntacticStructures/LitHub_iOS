@@ -12,18 +12,29 @@ import Alamofire
 
 class DispensariesListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    //Search bar variable
+
+
+    @IBOutlet weak var searchBar: UISearchBar!
+
+    
+    
     //Table Variables
     @IBOutlet weak var tableView: UITableView!
     
     
     var dispensaries = [mkDispensary]()
+    var filteredDispensaries = [mkDispensary]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         requestDispensaries()
+        self.searchBar.sizeToFit()
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.tableView.reloadData();
         print("in the list view controller")
+        
     }
     
     func requestDispensaries() {
@@ -76,26 +87,19 @@ class DispensariesListViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //print(self.dispensaries.count)
-        if self.dispensaries.count == 0 {
-            return 0
-        }
+        
+        
         return self.dispensaries.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("DispensaryCell") as! DispensaryCell
-        let dispensary = self.dispensaries[indexPath.row]
-        //print(NSThread.isMainThread() ? "Main Thread" : "Not on Main Thread")
-        cell.dispensaryName!.text = dispensary.name
-        cell.dispensaryPhone!.text = dispensary.phone
-        cell.dispensaryStreetAddress!.text = dispensary.address
-        cell.dispensaryCityState!.text = dispensary.city.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) + ", " + dispensary.state
-        //        cell.dispensaryHours!.text = dispensary.hours
-        
-        //print(dispensary.logo, "cat")
-        
-        let request: NSURLRequest = NSURLRequest(URL: NSURL(string: dispensary.logo)!)
+        let cell : DispensaryCell
+        cell = tableView.dequeueReusableCellWithIdentifier("DispensaryCell", forIndexPath: indexPath) as! DispensaryCell
+        cell.dispensaryName!.text = dispensaries[indexPath.row].name
+        cell.dispensaryPhone!.text = dispensaries[indexPath.row].phone
+        cell.dispensaryStreetAddress!.text = dispensaries[indexPath.row].address
+        cell.dispensaryCityState!.text = dispensaries[indexPath.row].city.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) + ", " + dispensaries[indexPath.row].state
+        let request: NSURLRequest = NSURLRequest(URL: NSURL(string: dispensaries[indexPath.row].logo)!)
         let mainQueue = NSOperationQueue.mainQueue()
         NSURLConnection.sendAsynchronousRequest(request, queue: mainQueue, completionHandler: { (response, data, error) -> Void in
             if error == nil {
@@ -111,6 +115,7 @@ class DispensariesListViewController: UIViewController, UITableViewDelegate, UIT
                 print("Error: \(error!.localizedDescription)")
             }
         })
+        
         return cell
     }
     
@@ -127,5 +132,9 @@ class DispensariesListViewController: UIViewController, UITableViewDelegate, UIT
         }
         
     }
+
+
+    
+    
     
 }

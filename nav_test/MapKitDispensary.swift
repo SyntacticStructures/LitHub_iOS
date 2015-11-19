@@ -44,4 +44,5 @@ class mkDispensary: NSObject, MKAnnotation {
         //        here we can use this function to generate subtitle from aything in class
         return name
     }
+    
 }

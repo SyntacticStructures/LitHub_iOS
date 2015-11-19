@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 
 class OrdersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    
+    let keychain = KeychainSwift()
 
     //@IBOutlet weak var orderStatusLabel: UILabel!
     //@IBOutlet weak var orderNumberLabel: UILabel!
@@ -33,7 +33,7 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
     //var email = String()
     //var id = String()
     var orderId = String()
-    var userID: Int?
+    var userID = String()
     
     var didPlaceReservation = false
     
@@ -64,8 +64,10 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
             progressBarView.setProgress(0.25, animated: true)
         }
         self.ordersTable.reloadData()
+        if userID != "" {
+            updateReservationsView()
+        }
         
-        updateReservationsView()
     }
     
     
@@ -143,7 +145,15 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
 
     
     func getCurrentUser() {
-        self.userID = mainInstance.userID
+        if mainInstance.userID != nil {
+            self.userID = mainInstance.userID!
+        } else if keychain.get("userID") != nil {
+            self.userID = keychain.get("userID")!
+            mainInstance.userID = self.userID
+        } else {
+            
+        }
+        
     }
     
     @IBAction func placeReservationButtonPressed(sender: UIButton) {
@@ -151,7 +161,7 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
         //print("place reservation pressed")
         let status = 0
         let date = String(NSDate())
-        let userID = self.userID!
+        let userID = self.userID
         let vendorID = cartItems[0].vendorID
         //print(vendorID)
         for var i = 0; i < cartItems.count; ++i {
@@ -176,20 +186,29 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
             if cartItems[i].quantityOz == 1 {
                 quantityOz = 1
             }
-            let orderData = ["status": status, "created_at": date, "updated_at": date,
-                             "user_id": userID, "vendor_id": vendorID, "quantity_gram": quantityGram,
-                             "quantity_eigth": quantityEigth, "quantity_quarter": quantityQuarter,
-                             "quantity_half": quantityHalf, "quantity_oz": quantityOz, "strain_id": strainID]
-            print(orderData)
-            Alamofire.request(.POST, "http://getlithub.herokuapp.com/addOrder", parameters: orderData as! [String: AnyObject], encoding: .JSON)
-                .responseJSON { response in
-                    print("in alamofire")
-                    print(response.result.value!)
-                    
+            if userID != "" {
+                let orderData = ["status": status, "created_at": date, "updated_at": date,
+                    "user_id": userID, "vendor_id": vendorID, "quantity_gram": quantityGram,
+                    "quantity_eigth": quantityEigth, "quantity_quarter": quantityQuarter,
+                    "quantity_half": quantityHalf, "quantity_oz": quantityOz, "strain_id": strainID]
+                print(orderData)
+                Alamofire.request(.POST, "http://getlithub.herokuapp.com/addOrder", parameters: orderData as! [String: AnyObject], encoding: .JSON)
+                    .responseJSON { response in
+                        print("in alamofire")
+                        print(response.result.value!)
+                        
                 }
-            reservationStatusLabel.text = "Order processing"
-            progressBarView.setProgress(0.5, animated: true)
-            activityIndicator.startAnimating()
+                reservationStatusLabel.text = "Order processing"
+                progressBarView.setProgress(0.5, animated: true)
+                activityIndicator.startAnimating()
+
+            } else {
+                var alert = UIAlertView()
+                alert.title = "Unknown User"
+                alert.message = "Please sign in before continuing"
+                alert.addButtonWithTitle("Proceed")
+                alert.show()
+            }
             
         }
         
@@ -221,7 +240,7 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
         //print(id)
         let string = "http://getlithub.herokuapp.com/getReservations"
         let parameters = [
-            "id": self.userID!
+            "id": self.userID
         ]
         Alamofire.request(.POST, string, parameters: parameters)
             .responseJSON { response in

@@ -70,8 +70,32 @@ class MapkitViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
             pinView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             pinView!.canShowCallout = true
             pinView!.calloutOffset = CGPoint(x: -5, y: 5)
-            pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure) as UIView
             pinView!.image = UIImage(named: imgStr)
+            let imageView : UIView;
+            let url : NSURL!
+//            var url = annotation.performSelector("logo") as! NSURL
+            if (annotation.performSelector("logo") != nil) {
+//                let stringURL = String(annotation.performSelector("logo"))
+//                url = NSURL(string: stringURL)
+                if annotation.respondsToSelector("logo") {
+//                    print(annotation.performSelector("logo"))
+                    if let stringURL = annotation.performSelector("logo").takeRetainedValue() as? String {
+//                        print(stringURL)
+                        url = NSURL(string: stringURL)
+//                        print(url)
+                        let data = NSData(contentsOfURL: url)
+                        if data != nil {
+                            let imageBox : UIImage!
+                            imageBox = UIImage(data: data!)
+                            pinView!.leftCalloutAccessoryView = UIImageView(image: imageBox)
+                        }
+                    }
+                    
+                }
+            }
+            pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure) as UIView
+            
+            
         }
             //if it's already on the map, draw it as is
         else {
