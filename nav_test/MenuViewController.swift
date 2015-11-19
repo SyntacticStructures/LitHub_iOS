@@ -65,39 +65,45 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBAction func filterButtonPressed(sender: UIButton) {
         if previousButtonTag == 1 {
             indicaButton.setBackgroundImage(UIImage(named: "IndicaDark"), forState: UIControlState.Normal)
+            indicaButton.setTitleColor(mainInstance.color, forState: UIControlState.Normal)
         }
         if previousButtonTag == 2 {
             hybridButton.setBackgroundImage(UIImage(named: "HybridDark"), forState: UIControlState.Normal)
+            hybridButton.setTitleColor(mainInstance.color, forState: UIControlState.Normal)
         }
         if previousButtonTag == 3 {
             sativaButton.setBackgroundImage(UIImage(named: "SativaDark"), forState: UIControlState.Normal)
+            sativaButton.setTitleColor(mainInstance.color, forState: UIControlState.Normal)
         }
         if previousButtonTag == 4 {
             edibleButton.setBackgroundImage(UIImage(named: "EdibleDark"), forState: UIControlState.Normal)
+            edibleButton.setTitleColor(mainInstance.color, forState: UIControlState.Normal)
         }
         if previousButtonTag == 5 {
             allButton.setBackgroundImage(UIImage(named: "BluntDark"), forState: UIControlState.Normal)
+            allButton.setTitleColor(mainInstance.color, forState: UIControlState.Normal)
         }
         didPressFilterButton = true
         menuFiltered = [Menu]()
         if sender.tag == 1 {
             //print(NSThread.isMainThread() ? "Main Thread" : "Not on Main Thread")
             indicaButton.setBackgroundImage(UIImage(named: "Indica"), forState: UIControlState.Normal)
-            
+            indicaButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
             indicaLabel.hidden = false
+            
             allLabel.hidden = true
             hybridLabel.hidden = true
             sativaLabel.hidden = true
             edibleLabel.hidden = true
-            //indicaButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-            //hybridButton.setBackgroundImage(UIImage(named: "HybridDark"), forState: UIControlState.Normal)
+
             filter("Indica")
             filterLabelDescription.text = "Indica strains tend to be sedating and relaxing with full-body effects"
             
         } else if sender.tag == 2 {
             hybridButton.setBackgroundImage(UIImage(named: "Hybrid"), forState: UIControlState.Normal)
-            
+            hybridButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
             hybridLabel.hidden = false
+            
             allLabel.hidden = true
             indicaLabel.hidden = true
             sativaLabel.hidden = true
@@ -107,8 +113,9 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             filterLabelDescription.text = "Hybrid strains are a cross between Hybrid and Sativa dominant strains"
         } else if sender.tag == 3 {
             sativaButton.setBackgroundImage(UIImage(named: "Sativa"), forState: UIControlState.Normal)
-            
+            sativaButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
             sativaLabel.hidden = false
+            
             allLabel.hidden = true
             indicaLabel.hidden = true
             hybridLabel.hidden = true
@@ -118,7 +125,9 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             filterLabelDescription.text = "Sativa strains tend to be uplifting and creative with cerebrally-focused effects"
         } else if sender.tag == 4 {
             edibleButton.setBackgroundImage(UIImage(named: "Edible"), forState: UIControlState.Normal)
+            edibleButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
             edibleLabel.hidden = false
+            
             allLabel.hidden = true
             indicaLabel.hidden = true
             hybridLabel.hidden = true
@@ -127,14 +136,15 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             filterLabelDescription.text = "An edible product that contains THC"
         } else if sender.tag == 5 {
             allButton.setBackgroundImage(UIImage(named: "Blunt"), forState: UIControlState.Normal)
+            allButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
             allLabel.hidden = false
+            
             indicaLabel.hidden = true
             hybridLabel.hidden = true
             sativaLabel.hidden = true
             edibleLabel.hidden = true
             didPressFilterButton = false
             filterLabelDescription.text = "All items"
-            //filter("Other")
         }
         previousButtonTag = sender.tag
         //print(NSThread.isMainThread() ? "Main Thread" : "Not on Main Thread")

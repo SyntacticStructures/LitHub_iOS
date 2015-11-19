@@ -130,7 +130,7 @@ class MapkitViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
                 print("here")
                 if response.result.isSuccess {
                     let arrayOfDispensaries = JSON(response.result.value!)
-                    print("this is the object returned", response);
+                    //print("this is the object returned", response);
                     //print(arrayOfDispensaries)
                     for var i = 0; i < arrayOfDispensaries.count; ++i {
                         let dispensaryId = arrayOfDispensaries[i]["id"].int

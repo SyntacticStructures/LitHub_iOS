@@ -5,12 +5,14 @@ PODS:
   - GoogleMaps (1.10.5)
   - Parse (1.9.1):
     - Bolts/Tasks (>= 1.4.0)
+  - Socket.IO-Client-Swift (4.1.1)
 
 DEPENDENCIES:
   - Alamofire
   - FontAwesome.swift
   - GoogleMaps
   - Parse
+  - Socket.IO-Client-Swift (~> 4.1.1)
 
 SPEC CHECKSUMS:
   Alamofire: 415bd7f56197722978759078486689f7ef913dce
@@ -18,5 +20,6 @@ SPEC CHECKSUMS:
   FontAwesome.swift: d40ac0a660f079c77945bab632ca20bf46ddc1ac
   GoogleMaps: da51c62c338c2d9c47cdad470a0d1e0e4b8544e4
   Parse: 54a965c8c19a6dde90284ab654dbcc77ef8c001b
+  Socket.IO-Client-Swift: 2620dbb779edbbd0bc0cac96c053ca7c35aba652
 
 COCOAPODS: 0.38.2

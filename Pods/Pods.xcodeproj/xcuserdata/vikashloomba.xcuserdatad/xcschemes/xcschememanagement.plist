@@ -9,15 +9,55 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>Bolts.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>FontAwesome.swift-FontAwesome.swift.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
+		<key>FontAwesome.swift.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
+		<key>Parse.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>6</integer>
+		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
+		<key>Socket.IO-Client-Swift.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>7</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>0C792315E5DBCF02FD265791F95333AB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1B17661DE877812180803F3DC2C59D16</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>27DC6682CB46927A3E15F266748D2FDE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2BD6AA3C40B1E901EA43633FAA9105DB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -48,6 +88,26 @@
 			<true/>
 		</dict>
 		<key>744D8936F538391EE0E1CD29AC2DAC87</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>77CEF18F61EFEFE18788C0B245BA0CA4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8EE32A5912103BCBC7850B09EC6761D9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>91544B0170CEB50EB32DBB4FF8FDFF3B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9AF260F7FA6D206A8ED6B92286BD5EE1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
