@@ -13,6 +13,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     
     let keychain = KeychainSwift()
     var userID: Int?
+    var global = mainInstance
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passTextField: UITextField!
@@ -72,7 +73,16 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
                             self.keychain.set("\(self.userID)", forKey: "userID")
                             self.keychain.set(self.emailTextField.text!, forKey: "email")
                             self.keychain.set(self.passTextField.text!, forKey: "password")
+                            
+                            //let userData = ["userID": self.userID]
+                            let userData: [String: AnyObject] = [
+                                "userID": self.userID!
+                            ]
+                            
+                            self.global.socket.emit("UserLoggedIn", userData)
                             //print("Segue to signin")
+                            
+                            
                             
                         } else {
                             print("This was the error response", response)

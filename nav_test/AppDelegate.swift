@@ -11,6 +11,8 @@ import GoogleMaps
 import Parse
 import Bolts
 
+
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -67,6 +69,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //                }
 //            }
 //        }
+        
+        
+
         
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false)
         

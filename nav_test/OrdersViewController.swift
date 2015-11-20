@@ -12,8 +12,6 @@ import Socket_IO_Client_Swift
 
 class OrdersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    let socket = SocketIOClient(socketURL: "192.168.1.64:8888", options: [.Log(true)])
-    
     @IBOutlet weak var ordersTable: UITableView!
     @IBOutlet weak var reservationIDLabel: UILabel!
     @IBOutlet weak var totalItemsLabel: UILabel!
@@ -31,21 +29,27 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
     //var id = String()
     var orderId = String()
     var userID: Int?
+    var global = mainInstance
     
     var didPlaceReservation = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.socket.on("connect") { data, ack in
-            print("ios:: socket connected")
-            
-            //self.socket.emit("iosTest", "this is a test from ios")
+        self.global.socket.on("MadeAvailable") { data, ack in
+            print("vendor made available")
+            self.reservationStatusLabel.text = "Your order is ready for pickup!"
+            self.progressBarView.setProgress(0.75, animated: true)
+        }
+        
+        self.global.socket.on("PickedUp") { data, ack in
+            print("user picked up")
+            self.reservationStatusLabel.text = "You picked up!"
+            self.progressBarView.setProgress(1.0, animated: true)
         }
         
         
-        
-        self.socket.connect()
+        //self.global.socket.connect()
         
         
         
@@ -69,7 +73,7 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
         
         self.cartItems = mainInstance.cart
         if self.cartItems.count > 0 &&  didPlaceReservation == false {
-            reservationStatusLabel.text = "Order pending..."
+            reservationStatusLabel.text = "Shopping..."
             progressBarView.setProgress(0.25, animated: true)
         }
         self.ordersTable.reloadData()
@@ -260,10 +264,10 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
                 .responseJSON { response in
                     print("in alamofire")
                     print(response.result.value!)
-                    self.socket.emit("PlaceResvButtonPressed")
+                    self.global.socket.emit("PlaceResvButtonPressed", orderData["vendor_id"]!)
                     
                 }
-            reservationStatusLabel.text = "Order processing"
+            reservationStatusLabel.text = "Order processing..."
             progressBarView.setProgress(0.5, animated: true)
             //activityIndicator.startAnimating()
             
