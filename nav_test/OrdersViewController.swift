@@ -36,7 +36,7 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
     //var id = String()
     var orderId = String()
 
-    var userID: Int?
+    //var userID: Int?
     var global = mainInstance
 
     var userID = String()
