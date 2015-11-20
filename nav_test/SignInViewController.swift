@@ -70,7 +70,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
                             self.userID = integerToCheckUser
                             mainInstance.userID = String(userData[0]["id"])
                             print(mainInstance.userID)
-                            self.keychain.set("\(self.userID)", forKey: "userID")
+                            self.keychain.set("\(self.userID!)", forKey: "userID")
                             self.keychain.set(self.emailTextField.text!, forKey: "email")
                             self.keychain.set(self.passTextField.text!, forKey: "password")
                             

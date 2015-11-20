@@ -46,6 +46,13 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //print(keychain.get("userID"))
+        if keychain.get("userID") != nil {
+            //print("got user id from key chain")
+            let userId = keychain.get("userID")!
+            print("this is the userId: ", userId)
+        }
+        
         
         self.global.socket.on("MadeAvailable") { data, ack in
             print("vendor made available")
