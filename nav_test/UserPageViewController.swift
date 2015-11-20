@@ -16,10 +16,10 @@ class UserPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        keychain.clear()
+//        keychain.clear()
         if (keychain.get("email") != nil && keychain.get("password") != nil && keychain.get("userID") != nil) {
             emailTextField.text = keychain.get("email")
-            mainInstance.userID = keychain.get("userID") as! Int
+            mainInstance.userID = keychain.get("userID")
         } else {
             print("Segue to signin")
 //            keychain.clear()

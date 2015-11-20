@@ -68,7 +68,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
                         let integerToCheckUser = Int(String(userData[0]["id"]))
                         if integerToCheckUser > -1 {
                             self.userID = integerToCheckUser
-                            mainInstance.userID = integerToCheckUser
+                            mainInstance.userID = String(userData[0]["id"])
                             print(mainInstance.userID)
                             self.keychain.set("\(self.userID)", forKey: "userID")
                             self.keychain.set(self.emailTextField.text!, forKey: "email")

@@ -163,6 +163,7 @@
 				04A60EDD1BA73F9C0068715E /* DispensariesListViewController.swift */,
 				046B9C301BD4585A009DDB1B /* Global.swift */,
 				04E42AF31BABEF22007C789E /* MapKitViewController.swift */,
+				9A804A751BE1C63400AAAA06 /* MapKitDispensary.swift */,
 				9A804A731BE1C38A00AAAA06 /* MapViewController.swift */,
 				04276F961BAB67C400B605FD /* Menu.swift */,
 				040363151BAA092D00740C3A /* MenuViewController.swift */,
@@ -177,7 +178,6 @@
 				040363171BAA0A1B00740C3A /* StrainCell.swift */,
 				047690131BAC08A9001F749E /* SwiftyJSON.swift */,
 				0455E2A21BA6CC3B00061792 /* Info.plist */,
-				9A804A751BE1C63400AAAA06 /* MapKitDispensary.swift */,
 			);
 			path = nav_test;
 			sourceTree = "<group>";
@@ -288,7 +288,7 @@
 				TargetAttributes = {
 					0455E2921BA6CC3B00061792 = {
 						CreatedOnToolsVersion = 7.0;
-						DevelopmentTeam = GKTKN5Z262;
+						DevelopmentTeam = BMNS2Z2BU9;
 					};
 					0455E2A61BA6CC3C00061792 = {
 						CreatedOnToolsVersion = 7.0;

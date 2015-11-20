@@ -70,7 +70,7 @@ class ProductViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     
     //get current user
     func getCurrentUser() {
-        self.userID = mainInstance.userID
+        self.userID = Int(mainInstance.userID!)
 //        let string = "http://getlithub.herokuapp.com/currentUser"
 //        Alamofire.request(.GET, string)
 //            .responseJSON { request, response, result in switch result {
