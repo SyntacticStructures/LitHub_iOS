@@ -312,7 +312,7 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
                 }
                 reservationStatusLabel.text = "Order processing"
                 progressBarView.setProgress(0.5, animated: true)
-                activityIndicator.startAnimating()
+                //activityIndicator.startAnimating()
 
             } else {
                 var alert = UIAlertView()

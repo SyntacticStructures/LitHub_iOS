@@ -18,17 +18,23 @@ class Main {
     let keychain = KeychainSwift()
     
     init() {
+        self.socket.connect()
         
-        if keychain.get("userID") != nil {
-            self.userID = keychain.get("userID")!
+        if self.keychain.get("userID") != nil {
+            self.userID = self.keychain.get("userID")
         }
-        
         
         self.socket.on("connect") { data, ack in
             print("iOS connected")
+            
+            if let userId = self.userID {
+                let userData: [String: AnyObject] = [
+                    "userID": userId
+                ]
+                self.socket.emit("UserLoggedIn", userData)
+            }
         }
         
-        self.socket.connect()
     }
     
     func signInAuth() {

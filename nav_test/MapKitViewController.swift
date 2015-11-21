@@ -60,17 +60,18 @@ class MapkitViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
             //return nil so map view draws "blue dot" for standard user location
             return nil
         }
-        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier("pin")
+        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier("pin") as? MKPinAnnotationView
         //    check if it's dequeueable. Apple docs recommend this to conserve memory
         var imgStr = String()
         //    let imageChecker = annotation as! mkDispensary
         if pinView == nil {
             imgStr = "weedpin"
             let identifier = "pin"
-            pinView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             pinView!.canShowCallout = true
             pinView!.calloutOffset = CGPoint(x: -5, y: 5)
             pinView!.image = UIImage(named: imgStr)
+            pinView!.animatesDrop = true
             let imageView : UIView;
             let url : NSURL!
 //            var url = annotation.performSelector("logo") as! NSURL
