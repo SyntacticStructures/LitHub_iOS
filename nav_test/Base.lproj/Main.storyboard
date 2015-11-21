@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="hyw-Qz-khn">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="hyw-Qz-khn">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -394,11 +394,19 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="20m-mv-8KB">
-                                <rect key="frame" x="290" y="160" width="20" height="20"/>
-                                <animations/>
-                                <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            </activityIndicatorView>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="asN-2s-i5m">
+                                <rect key="frame" x="0.0" y="508" width="600" height="43"/>
+                                <color key="backgroundColor" red="1" green="0.65490196079999996" blue="0.070588235289999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="43" id="D29-Yc-k6l"/>
+                                </constraints>
+                                <state key="normal" title="Shop Again?">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="shopAgainButtonPressed:" destination="qv0-gd-A4S" eventType="touchUpInside" id="nMu-gP-CLX"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -412,12 +420,15 @@
                             <constraint firstItem="hU3-eA-6oT" firstAttribute="top" secondItem="KkZ-7F-NGw" secondAttribute="bottom" constant="8" id="HDQ-R8-XGv"/>
                             <constraint firstItem="L9W-HJ-Pe8" firstAttribute="leading" secondItem="5Qg-Hd-VGb" secondAttribute="leading" id="I9y-bg-f6T"/>
                             <constraint firstItem="kVl-JV-bod" firstAttribute="trailing" secondItem="5Qg-Hd-VGb" secondAttribute="trailingMargin" id="Ie7-sG-edN"/>
+                            <constraint firstItem="6gJ-EN-hep" firstAttribute="top" secondItem="asN-2s-i5m" secondAttribute="bottom" id="J6E-Ne-eIN"/>
                             <constraint firstAttribute="leadingMargin" secondItem="Rka-dq-7gi" secondAttribute="leading" id="Jvy-it-qTW"/>
                             <constraint firstItem="6gJ-EN-hep" firstAttribute="top" secondItem="Hcj-mH-sNb" secondAttribute="bottom" id="Ooe-0l-gzJ"/>
                             <constraint firstItem="PtG-2k-uzm" firstAttribute="leading" secondItem="5Qg-Hd-VGb" secondAttribute="leadingMargin" constant="-20" id="OwR-tM-Ea0"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="asN-2s-i5m" secondAttribute="trailing" constant="-20" id="PZw-Mo-jAm"/>
                             <constraint firstItem="hU3-eA-6oT" firstAttribute="trailing" secondItem="5Qg-Hd-VGb" secondAttribute="trailingMargin" id="T6Q-ll-Fi7"/>
                             <constraint firstItem="KkZ-7F-NGw" firstAttribute="centerX" secondItem="5Qg-Hd-VGb" secondAttribute="centerX" id="U21-nm-cUQ"/>
                             <constraint firstItem="PtG-2k-uzm" firstAttribute="centerX" secondItem="5Qg-Hd-VGb" secondAttribute="centerX" id="Vxw-jQ-80B"/>
+                            <constraint firstItem="asN-2s-i5m" firstAttribute="leading" secondItem="5Qg-Hd-VGb" secondAttribute="leadingMargin" constant="-20" id="XTy-Dv-NeV"/>
                             <constraint firstItem="yhf-ev-O4t" firstAttribute="leading" secondItem="5Qg-Hd-VGb" secondAttribute="leadingMargin" id="XZw-r5-Evt"/>
                             <constraint firstItem="yhf-ev-O4t" firstAttribute="top" secondItem="Rka-dq-7gi" secondAttribute="bottom" constant="8" id="YLZ-eU-Fcw"/>
                             <constraint firstItem="L9W-HJ-Pe8" firstAttribute="leading" secondItem="5Qg-Hd-VGb" secondAttribute="leadingMargin" constant="-20" id="ZG9-Cp-VVd"/>
@@ -439,6 +450,7 @@
                         <outlet property="placeReservationButton" destination="PtG-2k-uzm" id="CIH-oK-ydy"/>
                         <outlet property="progressBarView" destination="hU3-eA-6oT" id="GuT-jz-h9y"/>
                         <outlet property="reservationStatusLabel" destination="kVl-JV-bod" id="Ztw-Fn-ym9"/>
+                        <outlet property="shopAgainButton" destination="asN-2s-i5m" id="Tm4-fR-ccE"/>
                         <outlet property="totalItemsLabel" destination="Rka-dq-7gi" id="cvA-Y4-1yX"/>
                         <outlet property="totalPriceLabel" destination="yhf-ev-O4t" id="xTW-Iv-NDL"/>
                     </connections>

@@ -24,6 +24,7 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var totalItemsLabel: UILabel!
     @IBOutlet weak var totalPriceLabel: UILabel!
     @IBOutlet weak var placeReservationButton: UIButton!
+    @IBOutlet weak var shopAgainButton: UIButton!
     @IBOutlet weak var reservationStatusLabel: UILabel!
     @IBOutlet weak var progressBarView: UIProgressView!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
@@ -64,6 +65,7 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
             print("user picked up")
             self.reservationStatusLabel.text = "You picked up!"
             self.progressBarView.setProgress(1.0, animated: true)
+            self.shopAgainButton.hidden = false
         }
         
         
@@ -298,35 +300,60 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
             progressBarView.setProgress(0.5, animated: true)
             //activityIndicator.startAnimating()
 
-            if userID != "" {
-                let orderData = ["status": status, "created_at": date, "updated_at": date,
-                    "user_id": userID, "vendor_id": vendorID, "quantity_gram": quantityGram,
-                    "quantity_eigth": quantityEigth, "quantity_quarter": quantityQuarter,
-                    "quantity_half": quantityHalf, "quantity_oz": quantityOz, "strain_id": strainID]
-                print(orderData)
-                Alamofire.request(.POST, "http://getlithub.herokuapp.com/addOrder", parameters: orderData as! [String: AnyObject], encoding: .JSON)
-                    .responseJSON { response in
-                        print("in alamofire")
-                        print(response.result.value!)
-                        
-                }
-                reservationStatusLabel.text = "Order processing"
-                progressBarView.setProgress(0.5, animated: true)
-                //activityIndicator.startAnimating()
-
-            } else {
-                var alert = UIAlertView()
-                alert.title = "Unknown User"
-                alert.message = "Please sign in before continuing"
-                alert.addButtonWithTitle("Proceed")
-                alert.show()
-            }
+//            if userID != "" {
+//                let orderData = ["status": status, "created_at": date, "updated_at": date,
+//                    "user_id": userID, "vendor_id": vendorID, "quantity_gram": quantityGram,
+//                    "quantity_eigth": quantityEigth, "quantity_quarter": quantityQuarter,
+//                    "quantity_half": quantityHalf, "quantity_oz": quantityOz, "strain_id": strainID]
+//                print(orderData)
+//                Alamofire.request(.POST, "http://getlithub.herokuapp.com/addOrder", parameters: orderData as! [String: AnyObject], encoding: .JSON)
+//                    .responseJSON { response in
+//                        print("in alamofire")
+//                        print(response.result.value!)
+//                        
+//                }
+//                reservationStatusLabel.text = "Order processing"
+//                progressBarView.setProgress(0.5, animated: true)
+//                //activityIndicator.startAnimating()
+//
+//            } else {
+//                var alert = UIAlertView()
+//                alert.title = "Unknown User"
+//                alert.message = "Please sign in before continuing"
+//                alert.addButtonWithTitle("Proceed")
+//                alert.show()
+//            }
 
             
         }
         
     }
     
+    @IBAction func shopAgainButtonPressed(sender: UIButton) {
+        print("user wants to shop again")
+        let userData: [String: AnyObject] = [
+            "userId": global.userID!
+        ]
+        Alamofire.request(.POST, "http://192.168.1.3:8888/orderComplete", parameters: userData as! [String: AnyObject], encoding: .JSON)
+            .responseJSON { response in
+                print("order complete:")
+                
+                let vendorId = self.cartItems[0].vendorID
+                self.global.socket.emit("OrderCompleted", vendorId)
+                
+                self.shopAgainButton.hidden = true
+                self.progressBarView.setProgress(0, animated: false)
+                self.reservationStatusLabel!.text = "No items in cart"
+                self.totalItemsLabel!.text = "Total: 0 items"
+                self.totalPriceLabel!.text = "$00.00"
+                self.totalPrice = 0.00
+                self.cartItems = [Reservation]()
+                self.reservations = [Reservation]()
+                self.ordersTable.reloadData()
+                
+        }
+        
+    }
 
     
     @IBAction func cancelOrder(sender: UIButton) {
@@ -351,7 +378,7 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
     
     func getOrder() {
         print("at get order", self.userID)
-        let string = "http://getlithub.herokuapp.com/getReservations"
+        let string = "http://192.168.1.3:8888/getReservations"
         let parameters = [
             "id": self.userID
         ]
@@ -393,7 +420,6 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
                     print("Request failed with error:")
                 }
             }
-        
     }
     
 }

@@ -13,6 +13,7 @@ import MapKit
 import FontAwesome_swift
 
 class MapkitViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
+    var global = mainInstance
     var dispensaries = [mkDispensary]()
     var cameraLocation: CLLocationCoordinate2D?
     var locationManager = CLLocationManager()
@@ -70,8 +71,9 @@ class MapkitViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             pinView!.canShowCallout = true
             pinView!.calloutOffset = CGPoint(x: -5, y: 5)
-            pinView!.image = UIImage(named: imgStr)
+            //pinView!.image = UIImage(named: imgStr)
             pinView!.animatesDrop = true
+            pinView!.pinColor = MKPinAnnotationColor.Green
             let imageView : UIView;
             let url : NSURL!
 //            var url = annotation.performSelector("logo") as! NSURL
