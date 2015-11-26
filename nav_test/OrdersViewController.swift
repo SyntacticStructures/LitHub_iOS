@@ -334,7 +334,7 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
         let userData: [String: AnyObject] = [
             "userId": global.userID!
         ]
-        Alamofire.request(.POST, "http://192.168.1.3:8888/orderComplete", parameters: userData as! [String: AnyObject], encoding: .JSON)
+        Alamofire.request(.POST, "http://192.168.1.65:8888/orderComplete", parameters: userData as! [String: AnyObject], encoding: .JSON)
             .responseJSON { response in
                 print("order complete:")
                 
@@ -378,13 +378,13 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
     
     func getOrder() {
         print("at get order", self.userID)
-        let string = "http://192.168.1.3:8888/getReservations"
+        let string = "http://192.168.1.65:8888/getReservations"
         let parameters = [
             "id": self.userID
         ]
         Alamofire.request(.POST, string, parameters: parameters)
             .responseJSON { response in
-                if response.data != nil {
+                if response.result.value != nil {
                     //case .Success(let data):
                         let arrayOfReservations = JSON(response.result.value!)
                         self.reservations = [Reservation]()

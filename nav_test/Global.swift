@@ -14,8 +14,9 @@ class Main {
     var userID : String?
     var cart = [Reservation]()
     var color = UIColor(red: 255/255, green: 167/255, blue: 18/255, alpha: 1.0)
-    let socket = SocketIOClient(socketURL: "192.168.1.3:8888", options: [.Log(true)])
+    let socket = SocketIOClient(socketURL: "192.168.1.65:8888", options: [.Log(true)])
     let keychain = KeychainSwift()
+    var deviceToken: String?
     
     init() {
         self.socket.connect()
@@ -26,10 +27,11 @@ class Main {
         
         self.socket.on("connect") { data, ack in
             print("iOS connected")
-            
+            print("this is device token: ", self.deviceToken!)
             if let userId = self.userID {
                 let userData: [String: AnyObject] = [
-                    "userID": userId
+                    "userID": userId,
+                    "deviceToken": self.deviceToken!
                 ]
                 self.socket.emit("UserLoggedIn", userData)
             }

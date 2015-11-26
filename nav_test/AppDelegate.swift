@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var color = UIColor(red: 255/255, green: 167/255, blue: 18/255, alpha: 1.0)
+    var global = mainInstance
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -97,6 +98,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let installation = PFInstallation.currentInstallation()
         installation.setDeviceTokenFromData(deviceToken)
         installation.saveInBackground()
+        
+        let tokenChars = UnsafePointer<CChar>(deviceToken.bytes)
+        var tokenString = ""
+        
+        for var i = 0; i < deviceToken.length; i++ {
+            tokenString += String(format: "%02.2hhx", arguments: [tokenChars[i]])
+        }
+        
+        print("tokenString: \(tokenString)")
+        self.global.deviceToken = tokenString
         
     }
     //Push notifications
