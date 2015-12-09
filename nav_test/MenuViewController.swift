@@ -226,7 +226,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             //Runs if success
             if response.data != nil {
                 print("Checked for disp items, success")
-                let arrOfProducts = JSON(response.result.value!)
+                if let arrOfProducts = JSON(rawValue: response.result.value!) {
                     if arrOfProducts.count != 0 {
                         for var i = 0; i < arrOfProducts.count; ++i {
                             let dispensaryName = arrOfProducts[i]["name"].string
@@ -252,6 +252,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 } else {
                     print("there were no items")
                 }
+            }
 
             //Failure case
             } else {

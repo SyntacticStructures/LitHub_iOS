@@ -10,7 +10,7 @@ import UIKit
 import GoogleMaps
 import Parse
 import Bolts
-
+import Socket_IO_Client_Swift
 
 
 @UIApplicationMain
@@ -19,8 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var color = UIColor(red: 255/255, green: 167/255, blue: 18/255, alpha: 1.0)
     var global = mainInstance
-
-
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         GMSServices.provideAPIKey("AIzaSyDoYtGolwmkFa9sgSScFMB2TLOgS7LmK2c")
@@ -98,7 +97,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let installation = PFInstallation.currentInstallation()
         installation.setDeviceTokenFromData(deviceToken)
         installation.saveInBackground()
-        
         let tokenChars = UnsafePointer<CChar>(deviceToken.bytes)
         var tokenString = ""
         
@@ -106,9 +104,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             tokenString += String(format: "%02.2hhx", arguments: [tokenChars[i]])
         }
         
-        print("tokenString: \(tokenString)")
-        self.global.deviceToken = tokenString
+//        print("tokenString: \(self.global.deviceToken)")
         
+//        self.global.deviceToken = tokenString
+        self.global.socket.connect()
     }
     //Push notifications
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {

@@ -63,7 +63,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
                 .responseJSON { response in
                     if response.data != nil {
 //                    case .Success(let data):
-                        //print("this is the users data", data)
+                        print("this is the users data", JSON(response.data!))
                         let userData = JSON(response.result.value!)
                         let integerToCheckUser = Int(String(userData[0]["id"]))
                         if integerToCheckUser > -1 {

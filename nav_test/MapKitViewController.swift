@@ -11,6 +11,7 @@ import CoreLocation
 import Alamofire
 import MapKit
 import FontAwesome_swift
+import Parse
 
 class MapkitViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     var global = mainInstance

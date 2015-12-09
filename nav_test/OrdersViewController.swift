@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import Socket_IO_Client_Swift
+import Parse
 
 class OrdersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     let keychain = KeychainSwift()
@@ -59,6 +60,9 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
             print("vendor made available")
             self.reservationStatusLabel.text = "Your order is ready for pickup!"
             self.progressBarView.setProgress(0.75, animated: true)
+//            let push = PFPush()
+//            push.setMessage("Your order has now been made available")
+//            push.sendPushInBackground()
         }
         
         self.global.socket.on("PickedUp") { data, ack in
@@ -66,6 +70,9 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
             self.reservationStatusLabel.text = "You picked up!"
             self.progressBarView.setProgress(1.0, animated: true)
             self.shopAgainButton.hidden = false
+//            let push = PFPush()
+//            push.setMessage("You picked up your order! Please rate your experience.")
+//            push.sendPushInBackground()
         }
         
         
@@ -288,13 +295,16 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
                              "user_id": userID, "vendor_id": vendorID, "quantity_gram": quantityGram,
                              "quantity_eigth": quantityEigth, "quantity_quarter": quantityQuarter,
                              "quantity_half": quantityHalf, "quantity_oz": quantityOz, "strain_id": strainID]
-            print(orderData)
-            Alamofire.request(.POST, "http://getlithub.herokuapp.com/addOrder", parameters: orderData as! [String: AnyObject], encoding: .JSON)
+            print("This is the order data: ", orderData)
+            let currentInstallation = PFInstallation.currentInstallation()
+            let userOrder = ["vendor_id": vendorID, "device_id": currentInstallation.objectId!]
+            Alamofire.request(.POST, "http://getlithub.herokuapp.com/addOrder", parameters: orderData as? [String: AnyObject], encoding: .JSON)
                 .responseJSON { response in
                     print("in alamofire")
                     print(response.result.value!)
-                    self.global.socket.emit("PlaceResvButtonPressed", orderData["vendor_id"]!)
-                    
+                    self.global.socket.emit("NewReservation", userOrder)
+                    currentInstallation.addUniqueObject(currentInstallation.objectId!, forKey: "channels")
+                    currentInstallation.saveInBackground()
                 }
             reservationStatusLabel.text = "Order processing..."
             progressBarView.setProgress(0.5, animated: true)
@@ -334,7 +344,7 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
         let userData: [String: AnyObject] = [
             "userId": global.userID!
         ]
-        Alamofire.request(.POST, "http://192.168.1.65:8888/orderComplete", parameters: userData as! [String: AnyObject], encoding: .JSON)
+        Alamofire.request(.POST, "http://192.168.1.145:8888/orderComplete", parameters: userData as! [String: AnyObject], encoding: .JSON)
             .responseJSON { response in
                 print("order complete:")
                 
@@ -376,6 +386,7 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
         }
     }
     
+    //THIS FUNCTION WONT WORK UNTIL THE STRING VARIABLE POINTS TO THE ACTUAL SERVER
     func getOrder() {
         print("at get order", self.userID)
         let string = "http://getlithub.herokuapp.com/getReservations"
