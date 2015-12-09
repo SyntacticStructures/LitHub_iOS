@@ -378,42 +378,47 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
     
     func getOrder() {
         print("at get order", self.userID)
-        let string = "http://192.168.1.65:8888/getReservations"
-        let parameters = [
-            "id": self.userID
+        let string = "http://getlithub.herokuapp.com/getReservations"
+        let userData: [String: AnyObject] = [
+            "id": self.global.userID!
         ]
-        Alamofire.request(.POST, string, parameters: parameters)
+        Alamofire.request(.POST, string, parameters: userData as! [String: AnyObject], encoding: .JSON)
             .responseJSON { response in
-                if response.result.value != nil {
+                print(response)
+                if response.result.isSuccess {
+                    print("there is cart items")
                     //case .Success(let data):
-                        let arrayOfReservations = JSON(response.result.value!)
-                        self.reservations = [Reservation]()
-                        print("this is the orders,", arrayOfReservations)
-                        for var i = 0; i < arrayOfReservations.count; ++i {
-                            let reservationID = arrayOfReservations[i]["id"].int
-                            let status = arrayOfReservations[i]["status"].string
-                            let vendorName = arrayOfReservations[i]["vendor"].string
-                            let vendorID = arrayOfReservations[i]["vendor_id"].int
-                            let strainName = arrayOfReservations[i]["name"].string
-                            let strainID = arrayOfReservations[i]["strain_id"].int
-                            let priceGram = arrayOfReservations[i]["price_gram"].double
-                            let priceEigth = arrayOfReservations[i]["price_eigth"].double
-                            let priceQuarter = arrayOfReservations[i]["price_quarter"].double
-                            let priceHalf = arrayOfReservations[i]["price_half"].double
-                            let priceOz = arrayOfReservations[i]["price_oz"].double
-                            let quantityGram = arrayOfReservations[i]["quantity_gram"].int
-                            let quantityEigth = arrayOfReservations[i]["quantity_eigth"].int
-                            let quantityQuarter = arrayOfReservations[i]["quantity_quarter"].int
-                            let quantityHalf = arrayOfReservations[i]["quantity_half"].int
-                            let quantityOz = arrayOfReservations[i]["quantity_oz"].int
-                            let reservation = Reservation(status: status!, vendor: vendorName!, vendorID: vendorID!, strainName: strainName!, strainID: strainID!,
-                                                          priceGram: priceGram!, priceEigth: priceEigth!, priceQuarter: priceQuarter!, priceHalf: priceHalf!, priceOz: priceOz!,
-                                                          quantityGram: quantityGram!, quantityEigth: quantityEigth!, quantityQuarter: quantityQuarter!, quantityHalf: quantityHalf!, quantityOz: quantityOz!)
-                            reservation.id = reservationID
-                            self.reservations.append(reservation)
+                    print(response.result)
+                    let arrayOfReservations = JSON(response.result.value!)
+                    self.reservations = [Reservation]()
+                        if arrayOfReservations.count != 0 {
+                            print("this is the orders,", arrayOfReservations)
+                            for var i = 0; i < arrayOfReservations.count; ++i {
+                                let reservationID = arrayOfReservations[i]["id"].int
+                                let status = arrayOfReservations[i]["status"].string
+                                let vendorName = arrayOfReservations[i]["vendor"].string
+                                let vendorID = arrayOfReservations[i]["vendor_id"].int
+                                let strainName = arrayOfReservations[i]["name"].string
+                                let strainID = arrayOfReservations[i]["strain_id"].int
+                                let priceGram = arrayOfReservations[i]["price_gram"].double
+                                let priceEigth = arrayOfReservations[i]["price_eigth"].double
+                                let priceQuarter = arrayOfReservations[i]["price_quarter"].double
+                                let priceHalf = arrayOfReservations[i]["price_half"].double
+                                let priceOz = arrayOfReservations[i]["price_oz"].double
+                                let quantityGram = arrayOfReservations[i]["quantity_gram"].int
+                                let quantityEigth = arrayOfReservations[i]["quantity_eigth"].int
+                                let quantityQuarter = arrayOfReservations[i]["quantity_quarter"].int
+                                let quantityHalf = arrayOfReservations[i]["quantity_half"].int
+                                let quantityOz = arrayOfReservations[i]["quantity_oz"].int
+                                let reservation = Reservation(status: status!, vendor: vendorName!, vendorID: vendorID!, strainName: strainName!, strainID: strainID!,
+                                                              priceGram: priceGram!, priceEigth: priceEigth!, priceQuarter: priceQuarter!, priceHalf: priceHalf!, priceOz: priceOz!,
+                                                              quantityGram: quantityGram!, quantityEigth: quantityEigth!, quantityQuarter: quantityQuarter!, quantityHalf: quantityHalf!, quantityOz: quantityOz!)
+                                reservation.id = reservationID
+                                self.reservations.append(reservation)
+                            }
+                            self.updateReservationsView()
+                            self.ordersTable.reloadData()
                         }
-                        self.updateReservationsView()
-                        self.ordersTable.reloadData()
                     
                 } else {
                 //case .Failure(_, let error):
