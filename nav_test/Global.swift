@@ -9,20 +9,24 @@
 import Foundation
 import UIKit
 import Socket_IO_Client_Swift
+import Parse
 
 class Main {
     var userID : String?
     var cart = [Reservation]()
     var color = UIColor(red: 255/255, green: 167/255, blue: 18/255, alpha: 1.0)
-    let socket = SocketIOClient(socketURL: "192.168.1.63:8888", options: [.Log(true)])
+    let socket = SocketIOClient(socketURL: "192.168.1.145:8888", options: [.Log(true)])
     let keychain = KeychainSwift()
+    
+    
+    
     var deviceToken: String?
     var firstConnect = true
     
     init() {
         print("global")
-        self.socket.connect()
-        
+//        self.socket.connect()
+//        self.keychain.clear()
         if self.keychain.get("userID") != nil {
             self.userID = self.keychain.get("userID")
         }
@@ -30,11 +34,11 @@ class Main {
         self.socket.on("connect") { data, ack in
             self.firstConnect = false
             print("iOS connected")
-            print("this is device token: ", self.deviceToken!)
+            let currentInstallation = PFInstallation.currentInstallation()
             if let userId = self.userID {
                 let userData: [String: AnyObject] = [
                     "userID": userId,
-                    "deviceToken": self.deviceToken!
+                    "device_id": currentInstallation.objectId!
                 ]
                 self.socket.emit("UserLoggedIn", userData)
             }
