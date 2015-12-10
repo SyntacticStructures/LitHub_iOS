@@ -262,7 +262,7 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
     
     @IBAction func placeReservationButtonPressed(sender: UIButton) {
         didPlaceReservation = true
-        //print("place reservation pressed")
+        print("place reservation pressed")
         let status = 0
         let date = String(NSDate())
         let userID = self.userID
@@ -352,10 +352,13 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
                 
                 self.shopAgainButton.hidden = true
                 self.progressBarView.setProgress(0, animated: false)
+                self.didPlaceReservation = false
+                
                 self.reservationStatusLabel!.text = "No items in cart"
                 self.totalItemsLabel!.text = "Total: 0 items"
                 self.totalPriceLabel!.text = "$00.00"
                 self.totalPrice = 0.00
+                
                 self.cartItems = [Reservation]()
                 self.reservations = [Reservation]()
                 self.global.cart = [Reservation]()
