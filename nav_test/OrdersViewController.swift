@@ -290,15 +290,14 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
             if cartItems[i].quantityOz == 1 {
                 quantityOz = 1
             }
-
+            let currentInstallation = PFInstallation.currentInstallation()
             let orderData = ["status": status, "created_at": date, "updated_at": date,
                              "user_id": userID, "vendor_id": vendorID, "quantity_gram": quantityGram,
                              "quantity_eigth": quantityEigth, "quantity_quarter": quantityQuarter,
-                             "quantity_half": quantityHalf, "quantity_oz": quantityOz, "strain_id": strainID]
+                             "quantity_half": quantityHalf, "quantity_oz": quantityOz, "strain_id": strainID, "device_id": currentInstallation.objectId!]
             print("This is the order data: ", orderData)
-            let currentInstallation = PFInstallation.currentInstallation()
             let userOrder = ["vendor_id": vendorID, "device_id": currentInstallation.objectId!]
-            Alamofire.request(.POST, "http://getlithub.herokuapp.com/addOrder", parameters: orderData as? [String: AnyObject], encoding: .JSON)
+            Alamofire.request(.POST, "http://192.168.1.11:8888/addOrder", parameters: orderData as? [String: AnyObject], encoding: .JSON)
                 .responseJSON { response in
                     print("in alamofire")
                     print(response.result.value!)
@@ -426,6 +425,11 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
                                                               quantityGram: quantityGram!, quantityEigth: quantityEigth!, quantityQuarter: quantityQuarter!, quantityHalf: quantityHalf!, quantityOz: quantityOz!)
                                 reservation.id = reservationID
                                 self.reservations.append(reservation)
+                            }
+                            if self.reservations.count != 0 {
+                                self.progressBarView.setProgress(0.5, animated: true)
+                                self.reservationStatusLabel.text = "Order Proccessing"
+                                
                             }
                             self.updateReservationsView()
                             self.ordersTable.reloadData()

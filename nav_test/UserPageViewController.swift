@@ -11,6 +11,7 @@ import UIKit
 
 class UserPageViewController: UIViewController {
     @IBOutlet weak var emailTextField: UILabel!
+    @IBOutlet weak var logOutButton: UIButton!
     
     let keychain = KeychainSwift()
     
@@ -44,5 +45,10 @@ class UserPageViewController: UIViewController {
         print("attempting to go to user page")
     }
     
+    @IBAction func logOutButtonPressed(sender: AnyObject) {
+        print("log out button pressed")
+        keychain.clear()
+        self.performSegueWithIdentifier("ShowSignInView", sender: sender)
+    }
     
 }

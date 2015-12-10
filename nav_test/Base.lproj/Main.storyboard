@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="hyw-Qz-khn">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="hyw-Qz-khn">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -938,13 +938,26 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qSf-8t-bQB">
+                                <rect key="frame" x="0.0" y="511" width="600" height="40"/>
+                                <state key="normal" title="Log Out"/>
+                                <connections>
+                                    <action selector="logOutButtonPressed:" destination="KdG-Yp-pNK" eventType="touchUpInside" id="Lyg-Fr-TIr"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Y3B-pq-RHm" firstAttribute="top" secondItem="qSf-8t-bQB" secondAttribute="bottom" id="2ib-wP-XdQ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="qSf-8t-bQB" secondAttribute="trailing" constant="-20" id="LsX-YK-b4N"/>
+                            <constraint firstItem="qSf-8t-bQB" firstAttribute="leading" secondItem="Cyy-NB-H2S" secondAttribute="leadingMargin" constant="-20" id="gcn-vR-9aa"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="WBF-LI-s0n"/>
                     <connections>
                         <outlet property="emailTextField" destination="AMI-5w-QeA" id="0Ut-iI-k2l"/>
+                        <outlet property="logOutButton" destination="qSf-8t-bQB" id="6zo-jO-e7i"/>
                         <segue destination="23G-FO-aWa" kind="presentation" identifier="ShowSignInView" modalPresentationStyle="currentContext" id="lTo-VN-Cfi"/>
                     </connections>
                 </viewController>

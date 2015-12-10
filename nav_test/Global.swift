@@ -15,7 +15,7 @@ class Main {
     var userID : String?
     var cart = [Reservation]()
     var color = UIColor(red: 255/255, green: 167/255, blue: 18/255, alpha: 1.0)
-    let socket = SocketIOClient(socketURL: "192.168.1.145:8888", options: [.Log(true)])
+    let socket = SocketIOClient(socketURL: "192.168.1.11:8888", options: [.Log(true)])
     let keychain = KeychainSwift()
     
     
