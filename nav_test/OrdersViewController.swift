@@ -48,7 +48,9 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //print(keychain.get("userID"))
+        self.global.progressBarView = self.progressBarView
+        self.global.reservationStatusLabel = self.reservationStatusLabel
+        
         if keychain.get("userID") != nil {
             //print("got user id from key chain")
             let userId = keychain.get("userID")!
@@ -104,6 +106,10 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
             progressBarView.setProgress(0.25, animated: true)
         }
         self.ordersTable.reloadData()
+        
+        print("view did appear")
+        
+        
         if userID != "" {
             updateReservationsView()
         }
@@ -347,7 +353,7 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
             .responseJSON { response in
                 print("order complete:")
                 
-                let vendorId = self.cartItems[0].vendorID
+                let vendorId = self.reservations[0].vendorID
                 self.global.socket.emit("OrderCompleted", vendorId)
                 
                 self.shopAgainButton.hidden = true
@@ -430,10 +436,21 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
                                 reservation.id = reservationID
                                 self.reservations.append(reservation)
                             }
+                            
+                            //check status of reservation and update progress bar accordingly
                             if self.reservations.count != 0 {
-                                self.progressBarView.setProgress(0.5, animated: true)
-                                self.reservationStatusLabel.text = "Order Proccessing"
-                                
+                                if self.reservations[0].status == "0" {
+                                    self.progressBarView.setProgress(0.5, animated: true)
+                                    self.reservationStatusLabel.text = "Order Proccessing"
+                                } else if self.reservations[0].status == "1" {
+                                    self.progressBarView.setProgress(0.75, animated: true)
+                                    self.reservationStatusLabel.text = "Your order is ready for pickup!"
+                                } else if self.reservations[0].status == "2" {
+                                    self.progressBarView.setProgress(1, animated: true)
+                                    self.reservationStatusLabel.text = "You picked up"
+                                    self.shopAgainButton.hidden = false
+                                    
+                                }
                             }
                             self.updateReservationsView()
                             self.ordersTable.reloadData()

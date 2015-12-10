@@ -8,12 +8,19 @@
 
 import Foundation
 import UIKit
+import Alamofire
 import Socket_IO_Client_Swift
 import Parse
 
 class Main {
     var userID : String?
+    
     var cart = [Reservation]()
+    var reservationStatus = "0"
+    var progressBarView: UIProgressView?
+    var reservationStatusLabel: UILabel?
+    
+    
     var color = UIColor(red: 255/255, green: 167/255, blue: 18/255, alpha: 1.0)
     let socket = SocketIOClient(socketURL: "192.168.1.11:8888", options: [.Log(true)])
     let keychain = KeychainSwift()
@@ -43,12 +50,37 @@ class Main {
                 self.socket.emit("UserLoggedIn", userData)
             }
         }
+    }
+    
+    func setReservationStatus() {
+        print("in setReservationStatus")
+        let endPoint = "http://getlithub.herokuapp.com/getReservations"
+        let userData: [String: AnyObject] = [
+            "id": self.userID!
+        ]
+        Alamofire.request(.POST, endPoint, parameters: userData as! [String: AnyObject], encoding: .JSON)
+            .responseJSON { response in
+                if response.result.isSuccess {
+                    let arrayOfReservations = JSON(response.result.value!)
+                    if arrayOfReservations.count > 0 {
+                        self.reservationStatus = arrayOfReservations[0]["status"].string!
+                        
+                        if self.reservationStatus == "1" {
+                            self.progressBarView?.setProgress(0.75, animated: true)
+                            self.reservationStatusLabel?.text = "Your order is ready for pickup!"
+                        } else if self.reservationStatus == "2" {
+                            self.progressBarView?.setProgress(1.0, animated: true)
+                            self.reservationStatusLabel?.text = "You picked up"
+                        }
+                    }
+                } else {
+                    print("error setting reservation status")
+                }
+        }
         
     }
     
-    func signInAuth() {
-        
-    }
+    
 }
 
 var mainInstance = Main()
