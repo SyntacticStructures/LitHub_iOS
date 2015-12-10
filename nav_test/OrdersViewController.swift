@@ -343,7 +343,7 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
         let userData: [String: AnyObject] = [
             "userId": global.userID!
         ]
-        Alamofire.request(.POST, "http://192.168.1.145:8888/orderComplete", parameters: userData as! [String: AnyObject], encoding: .JSON)
+        Alamofire.request(.POST, "http://192.168.1.11:8888/orderComplete", parameters: userData as! [String: AnyObject], encoding: .JSON)
             .responseJSON { response in
                 print("order complete:")
                 
@@ -358,6 +358,7 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
                 self.totalPrice = 0.00
                 self.cartItems = [Reservation]()
                 self.reservations = [Reservation]()
+                self.global.cart = [Reservation]()
                 self.ordersTable.reloadData()
                 
         }
