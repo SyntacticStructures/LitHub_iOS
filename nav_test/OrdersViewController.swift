@@ -48,8 +48,12 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //global variables for when app enters background 
+        //UI can still be updated
         self.global.progressBarView = self.progressBarView
         self.global.reservationStatusLabel = self.reservationStatusLabel
+        self.global.shopAgainButton = self.shopAgainButton
         
         if keychain.get("userID") != nil {
             //print("got user id from key chain")
@@ -303,7 +307,7 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
                              "quantity_half": quantityHalf, "quantity_oz": quantityOz, "strain_id": strainID, "device_id": currentInstallation.objectId!]
             print("This is the order data: ", orderData)
             let userOrder = ["vendor_id": vendorID, "device_id": currentInstallation.objectId!]
-            Alamofire.request(.POST, "http://192.168.1.11:8888/addOrder", parameters: orderData as? [String: AnyObject], encoding: .JSON)
+            Alamofire.request(.POST, "http://192.168.1.67:8888/addOrder", parameters: orderData as? [String: AnyObject], encoding: .JSON)
                 .responseJSON { response in
                     print("in alamofire")
                     print(response.result.value!)
@@ -315,29 +319,6 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
             progressBarView.setProgress(0.5, animated: true)
             //activityIndicator.startAnimating()
 
-//            if userID != "" {
-//                let orderData = ["status": status, "created_at": date, "updated_at": date,
-//                    "user_id": userID, "vendor_id": vendorID, "quantity_gram": quantityGram,
-//                    "quantity_eigth": quantityEigth, "quantity_quarter": quantityQuarter,
-//                    "quantity_half": quantityHalf, "quantity_oz": quantityOz, "strain_id": strainID]
-//                print(orderData)
-//                Alamofire.request(.POST, "http://getlithub.herokuapp.com/addOrder", parameters: orderData as! [String: AnyObject], encoding: .JSON)
-//                    .responseJSON { response in
-//                        print("in alamofire")
-//                        print(response.result.value!)
-//                        
-//                }
-//                reservationStatusLabel.text = "Order processing"
-//                progressBarView.setProgress(0.5, animated: true)
-//                //activityIndicator.startAnimating()
-//
-//            } else {
-//                var alert = UIAlertView()
-//                alert.title = "Unknown User"
-//                alert.message = "Please sign in before continuing"
-//                alert.addButtonWithTitle("Proceed")
-//                alert.show()
-//            }
 
             
         }
@@ -349,12 +330,20 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
         let userData: [String: AnyObject] = [
             "userId": global.userID!
         ]
-        Alamofire.request(.POST, "http://192.168.1.11:8888/orderComplete", parameters: userData as! [String: AnyObject], encoding: .JSON)
+        Alamofire.request(.POST, "http://192.168.1.67:8888/orderComplete", parameters: userData as! [String: AnyObject], encoding: .JSON)
             .responseJSON { response in
                 print("order complete:")
+                //print(self.global.cart)
                 
-                let vendorId = self.reservations[0].vendorID
-                self.global.socket.emit("OrderCompleted", vendorId)
+                var vendorId: Int?
+                if self.global.cart.count > 0 {
+                    vendorId = self.global.cart[0].vendorID
+                }
+                if self.reservations.count > 0 {
+                    vendorId = self.reservations[0].vendorID
+                }
+                
+                self.global.socket.emit("OrderCompleted", vendorId!)
                 
                 self.shopAgainButton.hidden = true
                 self.progressBarView.setProgress(0, animated: false)

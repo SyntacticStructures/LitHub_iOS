@@ -19,10 +19,11 @@ class Main {
     var reservationStatus = "0"
     var progressBarView: UIProgressView?
     var reservationStatusLabel: UILabel?
+    var shopAgainButton: UIButton?
     
     
     var color = UIColor(red: 255/255, green: 167/255, blue: 18/255, alpha: 1.0)
-    let socket = SocketIOClient(socketURL: "192.168.1.11:8888", options: [.Log(true)])
+    let socket = SocketIOClient(socketURL: "192.168.1.67:8888", options: [.Log(true)])
     let keychain = KeychainSwift()
     
     
@@ -71,6 +72,7 @@ class Main {
                         } else if self.reservationStatus == "2" {
                             self.progressBarView?.setProgress(1.0, animated: true)
                             self.reservationStatusLabel?.text = "You picked up"
+                            self.shopAgainButton?.hidden = false
                         }
                     }
                 } else {
