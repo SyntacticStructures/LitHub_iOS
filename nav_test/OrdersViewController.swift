@@ -271,13 +271,19 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     @IBAction func placeReservationButtonPressed(sender: UIButton) {
+        self.placeReservationButton.enabled = false
         didPlaceReservation = true
         print("place reservation pressed")
+        
         let status = 0
         let date = String(NSDate())
         let userID = self.userID
         let vendorID = cartItems[0].vendorID
+        
+        let currentInstallation = PFInstallation.currentInstallation()
+        
         //print(vendorID)
+        var ordersArray = [AnyObject]()
         for var i = 0; i < cartItems.count; ++i {
             let strainID = cartItems[i].strainID
             var quantityGram = 0
@@ -300,20 +306,34 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
             if cartItems[i].quantityOz == 1 {
                 quantityOz = 1
             }
-            let currentInstallation = PFInstallation.currentInstallation()
+            
+            
             let orderData = ["status": status, "created_at": date, "updated_at": date,
                              "user_id": userID, "vendor_id": vendorID, "quantity_gram": quantityGram,
                              "quantity_eigth": quantityEigth, "quantity_quarter": quantityQuarter,
                              "quantity_half": quantityHalf, "quantity_oz": quantityOz, "strain_id": strainID, "device_id": currentInstallation.objectId!]
             print("This is the order data: ", orderData)
-            let userOrder = ["vendor_id": vendorID, "device_id": currentInstallation.objectId!]
-            Alamofire.request(.POST, "http://192.168.1.67:8888/addOrder", parameters: orderData as? [String: AnyObject], encoding: .JSON)
+            ordersArray.append(orderData)
+        }
+        
+        let allOrders: [String: AnyObject] = ["orders": ordersArray]
+        
+        Alamofire.request(.POST, "http://192.168.1.67:8888/addOrder", parameters: allOrders as? [String: AnyObject], encoding: .JSON)
                 .responseJSON { response in
+                    //need to code if alamofire request is not succesful, reenable reservation button
                     print("in alamofire")
                     print(response.result.value!)
+                    
+                    
+                    //for sockets
+                    let userOrder = ["vendor_id": vendorID, "device_id": currentInstallation.objectId!]
                     self.global.socket.emit("NewReservation", userOrder)
                     currentInstallation.addUniqueObject(currentInstallation.objectId!, forKey: "channels")
                     currentInstallation.saveInBackground()
+                    
+                    //disable reserve button and set button text
+                    self.placeReservationButton.enabled = false
+                    self.placeReservationButton.setTitle("Order Placed", forState: UIControlState.Normal)
                 }
             reservationStatusLabel.text = "Order processing..."
             progressBarView.setProgress(0.5, animated: true)
@@ -321,7 +341,7 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
 
 
             
-        }
+        
         
     }
     
@@ -346,6 +366,9 @@ class OrdersViewController: UIViewController, UITableViewDataSource, UITableView
                 self.global.socket.emit("OrderCompleted", vendorId!)
                 
                 self.shopAgainButton.hidden = true
+                self.placeReservationButton.enabled = true
+                self.placeReservationButton.setTitle("Make Reservation", forState: UIControlState.Normal)
+                
                 self.progressBarView.setProgress(0, animated: false)
                 self.didPlaceReservation = false
                 

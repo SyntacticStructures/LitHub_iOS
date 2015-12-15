@@ -290,13 +290,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PtG-2k-uzm">
-                                <rect key="frame" x="0.0" y="508" width="600" height="43"/>
+                                <rect key="frame" x="0.0" y="496" width="600" height="55"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.0" green="0.80000000000000004" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="43" id="efF-aj-asE"/>
+                                    <constraint firstAttribute="height" constant="55" id="zuz-sR-ww1"/>
                                 </constraints>
-                                <state key="normal" title="Place Reservation">
+                                <state key="normal" title="Make Reservation">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -395,11 +395,11 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="asN-2s-i5m">
-                                <rect key="frame" x="0.0" y="508" width="600" height="43"/>
+                                <rect key="frame" x="0.0" y="497" width="600" height="54"/>
                                 <animations/>
                                 <color key="backgroundColor" red="1" green="0.65490196079999996" blue="0.070588235289999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="43" id="D29-Yc-k6l"/>
+                                    <constraint firstAttribute="height" constant="54" id="Rqx-Si-7rq"/>
                                 </constraints>
                                 <state key="normal" title="Shop Again?">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
